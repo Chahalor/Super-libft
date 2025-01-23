@@ -4,7 +4,7 @@
 NAME :=	super-memory.a
 
 CC :=		cc
-CFLAGS =	-Wall -Wextra -Werror
+CFLAGS =	-Wall -Wextra -Werror -g3
 AR =		ar rcs
 INCFLAGS = 	-I./$(DIR_INCL)
 
@@ -12,27 +12,23 @@ INCFLAGS = 	-I./$(DIR_INCL)
 
 DIR_INCL =	../../
 DIR_SRC =	.
-DIR_OBJ =	../../.obj/memory
+DIR_OBJ =	../../.obj/
 
-SRC =	sft_memset.c #sft_bzero.c sft_memcpy.c sft_memccpy.c \
-		sft_memmove.c sft_memchr.c sft_memcmp.c sft_calloc.c
+SRC =	sft_memset.c sft_bzero.c sft_memcpy.c sft_memchr.c
 
 OBJ = $(addprefix $(DIR_OBJ)/, $(SRC:.c=.o))
 
 # rules
 .PHONY: all clean fclean re
 
-all: $(NAME) $(DIR_OBJ)
+all:  $(DIR_OBJ) $(NAME)
 
 $(NAME): $(OBJ)
-	@$(AR) $@ $^
-	@echo "\033[32m[✔]\033[0m \033[1m$@\033[0m created"
+# @$(AR) $@ $^
+# @echo "\n\033[32m[✔]\033[0m \033[1m$@\033[0m created"
 
 $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c
 	$(call compile_object, $(INCFLAGS), $(OBJ), $(COLOR_YELLOW))
-
-$(DIR_OBJ):
-	@mkdir -p $@
 
 clean:
 	@rm -rf $(DIR_OBJ)
@@ -66,7 +62,7 @@ define compile_object
 		$(shell printf '=%.0s' $$(seq 1 $$(echo "$$(( $(BAR_LENGTH) * $(COUNT) / $(words $(2)) ))"))) \
 		$(COUNT) \
 		$(words $(2))
-		printf " "
 	@true
+	@printf " "
 endef
 

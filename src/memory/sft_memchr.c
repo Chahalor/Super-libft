@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is-func2.c                                         :+:      :+:    :+:   */
+/*   sft_memchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nduvoid <nduvoid@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 08:35:01 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/01/23 08:35:36 by nduvoid          ###   ########.fr       */
+/*   Created: 2025/01/23 15:21:56 by nduvoid           #+#    #+#             */
+/*   Updated: 2025/01/23 15:40:43 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "super-libft.h"
+#include "super_libft.h"
 
-int	isspace(int c)
+void	*ft_memchr(const void *ptr, int c, size_t len)
 {
-	return (c == ' ' || (unsigned char)c - 9 < 5);
-}
+	const unsigned char	*p = ptr;
+	unsigned char		ch;
 
-int	islower(int c)
-{
-	return ((unsigned char)(c | 32) - 97 < 26);
-}
-
-int	isupper(int c)
-{
-	return ((unsigned char)(c & 95) - 65 < 26);
+	ch = (unsigned char)c;
+	__asm__ (
+		"repne scasb"
+		: "=D" (p), "=c" (len)
+		: "D" (p), "a" (ch), "c" (len)
+		: "memory"
+		);
+	if (len == 0)
+		return (NULL);
+	return ((void *)(p - 1));
 }

@@ -6,16 +6,17 @@
 /*   By: nduvoid <nduvoid@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 10:09:41 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/01/23 10:10:04 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/01/23 15:37:33 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "super-libft.h"
+#include "super_libft.h"
 
 int main(void)
 {
-	char	str[10] = "Hello";
-	ft_memset(str, 'a', 5);
-	printf("%s\n", str);
-	return (0);
+	char	str[10] = "123456789";
+
+	char *chr = ft_memchr(str, '4', 9);
+	printf("%s\n", chr);
+	return 0;
 }

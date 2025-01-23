@@ -10,9 +10,8 @@ MAKEFLAGS += --no-print-directory	# no Entering / Leaving messages
 NAME :=			super-libft.a
 
 CC :=			cc
-CFLAGS =		-Wall -Wextra -Werror -I./$(DIR_INCL)
+CFLAGS =		-Wall -Wextra -Werror -I./$(DIR_INCL) -Isuper_libft.h
 AR =			ar rcs
-INCFLAGS = 		-I./$(DIR_INCL)
 DEBUGFLAGS =
 ARGS =
 
@@ -34,26 +33,15 @@ DIR_MEM =	$(DIR_SRC)/memory
 DIR_STR =	$(DIR_SRC)/string
 DIR_UTILS =	$(DIR_SRC)/utils
 
+AR_MEM = $(DIR_MEM)/super-memory.a
 
-MEM_SRC =	ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c \
-			ft_memmove.c ft_memchr.c ft_memcmp.c ft_calloc.c
-
-STR_SRC =	ft_strlen.c ft_strlcpy.c ft_strlcat.c ft_strchr.c \
-
-IS_SRC =	is_func.c is_func2.c
-
-PUT_SRC =	ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c
-
-SRC =		$(MEM_SRC) $(STR_SRC) $(IS_SRC) $(PUT_SRC)
-
-# All object files
-OBJ = $(addprefix $(DIR_OBJ)/, $(SRC:.c=.o))
+AR_ALL = $(AR_MEM)
 
 # ***************************************************** #
 # *                      Main Rules                   * #
 # ***************************************************** #
 
-all: write_header $(NAME)
+all: write_header norm $(NAME)
 
 $(NAME): $(LIBFT) $(MLX_LIB) compile
 
@@ -63,21 +51,21 @@ $(NAME): $(LIBFT) $(MLX_LIB) compile
 
 .PHONY: compile
 
-compile: $(DIR_OBJ) $(OBJ)
+compile: $(DIR_OBJ) $(AR_ALL)
 	@printf "\n"
 	@echo "\033[32m ✅ Compilation done\033[0m"
-	@$(AR) $(NAME) $(OBJ)
+	@$(AR) $(NAME) $(DIR_OBJ)/*.o
+	@ranlib $(NAME)
 #@$(CC) $(CFLAGS) $(DEBUGFLAGS) $(OBJ) $(LIBFT)-o $(NAME) # compile commmand for executable
 	@echo "\033[32m ✅ $(NAME) created\033[0m"
 
-$(DIR_OBJ)/%.o: $(DIR_SRC)/%.c | $(DIR_OBJ)
-	@$(call compile_object, $(INCFLAGS), $(SRC), $(COLOR_YELLOW))
+$(AR_MEM):
+	@make -C $(DIR_MEM)
+	@$(AR) $(AR_MEM)
+	@ranlib $(AR_MEM)
 
 $(DIR_OBJ):
 	@mkdir -p $(DIR_OBJ)
-
-$(LIBFT):
-	@make -C $(DIR_LIBFT)
 
 # ***************************************************** #
 # *                    Clean Rules                    * #
@@ -87,12 +75,10 @@ $(LIBFT):
 
 clean:
 	@rm -rf $(DIR_OBJ)
-	-@make -C $(DIR_LIBFT) clean
-	-@make -C $(DIR_MLX) clean
 
 fclean: clean
 	@rm -f $(NAME)
-	-@make -C $(DIR_LIBFT) fclean
+	-@make -C $(DIR_MEM) fclean
 
 re: fclean all
 
@@ -128,7 +114,7 @@ norm:
 	@$(call make_norm)
 
 define make_norm
-	@norminette $(DIR_SRC)/ $(DIR_LIBFT)/ $(DIR_INCL)/fdf.h > /tmp/norm_output.txt; \
+	@norminette $(DIR_SRC)/ super_libft.h > /tmp/norm_output.txt; \
 	if grep -q " Error!" /tmp/norm_output.txt; then \
 		cat /tmp/norm_output.txt | grep "Error"; \
 		echo " ❌ \e[31mNorminette failed\e[0m"; \

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   super-libft.h                                      :+:      :+:    :+:   */
+/*   super_libft.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nduvoid <nduvoid@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 08:27:52 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/01/23 10:04:14 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/01/23 15:28:16 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
-#include <stdint.h>
+# include <stdint.h>
 
 // Local
-//...
+# include "src/is/is.h"
+# include "src/is/is2.h"
 
 /* -----| Define |----- */
 
@@ -45,6 +46,11 @@ typedef unsigned long long	t_ullong;
 
 /* -----| Prototypes |----- */
 
+// Memory
 void	*ft_memset(void *ptr, int value, size_t len);
+void	*ft_memcpy(void *dest, const void *src, size_t len);
+void	*ft_memmove(void *dest, const void *src, size_t n);
+void	ft_bzero(void *ptr, size_t len);
+void	*ft_memchr(const void *ptr, int c, size_t len);
 
 #endif	// SUPER_LIBFT_H

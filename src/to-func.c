@@ -6,11 +6,11 @@
 /*   By: nduvoid <nduvoid@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 08:36:04 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/01/23 08:36:14 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/01/23 15:13:37 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "super-libft.h"
+#include "super_libft.h"
 
 int	tolower(int c)
 {
@@ -21,4 +21,3 @@ int	toupper(int c)
 {
 	return (c & 95);
 }
-
