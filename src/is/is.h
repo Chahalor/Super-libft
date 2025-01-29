@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:05:51 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/01/23 15:41:16 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/01/29 13:06:47 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * 
  * @return int 1 if the character is a space, 0 otherwise.
  */
-static inline int	ft_isspace(int c)
+__attribute__((always_inline)) static inline int	ft_isspace(int c)
 {
 	return (c == ' ' || (unsigned char)c - 9 < 5);
 }
@@ -34,7 +34,7 @@ static inline int	ft_isspace(int c)
  * 
  * @return int 1 if the character is a lowercase letter, 0 otherwise.
  */
-static inline int	ft_islower(int c)
+__attribute__((always_inline)) static inline int	ft_islower(int c)
 {
 	return ((unsigned char)(c | 32) - 97 < 26);
 }
@@ -46,7 +46,7 @@ static inline int	ft_islower(int c)
  * 
  * @return int 1 if the character is an uppercase letter, 0 otherwise.
  */
-static inline int	ft_isupper(int c)
+__attribute__((always_inline)) static inline int	ft_isupper(int c)
 {
 	return ((unsigned char)(c & 95) - 65 < 26);
 }
@@ -58,7 +58,7 @@ static inline int	ft_isupper(int c)
  * 
  * @return int 1 if the character is a letter, 0 otherwise.
  */
-static inline int	ft_isalpha(int c)
+__attribute__((always_inline)) static inline int	ft_isalpha(int c)
 {
 	return ((unsigned char)(c | 32) - 97 < 26);
 }
@@ -70,7 +70,7 @@ static inline int	ft_isalpha(int c)
  * 
  * @return int 1 if the character is a digit, 0 otherwise.
  */
-static inline int	ft_isdigit(int c)
+__attribute__((always_inline)) static inline int	ft_isdigit(int c)
 {
 	return ((unsigned char)c - 48 < 10);
 }

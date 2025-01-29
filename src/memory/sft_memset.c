@@ -6,11 +6,34 @@
 /*   By: nduvoid <nduvoid@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 09:16:04 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/01/23 15:13:41 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/01/29 12:10:08 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "super_libft.h"
+
+#if defined(__GNUC__) || defined(__clang__)
+
+/**
+ * @brief Set a block of memory with a specific val.
+ * 
+ * @param ptr Pointer to the block of memory to fill.
+ * @param val val to set.
+ * @param len Number of bytes to set.
+ * 
+ * @return void* Pointer to the memory block.
+ * 
+ * @details Use the built-in function `__builtin_memset()` to fill the first `len`
+ * 
+ * @example 
+ * 	ft_memset(ptr, 0, 10); // Fill the first 10 bytes of `ptr` with 0.
+ */
+void	*ft_memset(void *ptr, int val, size_t len)
+{
+	return (__builtin_memset(ptr, val, len));
+}
+
+#else
 
 /**
  * @brief Set a block of memory with a specific val.
@@ -52,3 +75,5 @@ void	*ft_memset(void *ptr, int val, size_t len)
 		);
 	return (ptr);
 }
+
+#endif	// __GCC__ || __clang__

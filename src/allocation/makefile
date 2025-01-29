@@ -1,7 +1,7 @@
 # memory makefile
 
 # variables
-NAME :=	super-memory.a
+NAME :=	super-alloc.a
 
 CC :=		cc
 CFLAGS =	-Wall -Wextra -Werror
@@ -14,7 +14,7 @@ DIR_INCL =	../../
 DIR_SRC =	.
 DIR_OBJ =	../../.obj/
 
-SRC =	sft_memset.c sft_bzero.c sft_memcpy.c sft_memchr.c
+SRC =	sft_calloc.c sft_realloc.c
 
 OBJ = $(addprefix $(DIR_OBJ)/, $(SRC:.c=.o))
 

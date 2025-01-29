@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@42mulhouse.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 15:08:59 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/01/23 15:41:30 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/01/29 13:06:58 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * 
  * @return int 1 if the character is a digit, 0 otherwise.
  */
-static inline int	ft_isalnum(int c)
+__attribute__((always_inline)) static inline int	ft_isalnum(int c)
 {
 	return (ft_isalpha(c) || ft_isdigit(c));
 }
@@ -34,7 +34,7 @@ static inline int	ft_isalnum(int c)
  * 
  * @return int 1 if the character is a digit, 0 otherwise.
  */
-static inline int	ft_isascii(int c)
+__attribute__((always_inline)) static inline int	ft_isascii(int c)
 {
 	return ((unsigned char)c < 128);
 }
@@ -46,7 +46,7 @@ static inline int	ft_isascii(int c)
  * 
  * @return int 1 if the character is a digit, 0 otherwise.
  */
-static inline int	ft_isprint(int c)
+__attribute__((always_inline)) static inline int	ft_isprint(int c)
 {
 	return ((unsigned char)c - 32 < 95);
 }
