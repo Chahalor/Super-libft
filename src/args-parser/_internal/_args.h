@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:49:37 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/04/17 12:58:42 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/04/17 18:18:59 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,14 @@
 	// ...
 
 /* Internal */
-# include "args.h"
+# include "args_parser.h"
+#include "formating.h"
 
 /* ************************************************************************** */
 /*                                 Defines                                    */
 /* ************************************************************************** */
 
-//...
+# define NB_BUILTIN_OPTIONS	1
 
 /* ************************************************************************** */
 /*                                 Typedefs                                   */
@@ -65,8 +66,24 @@ t_parser	*_parser_init(void);
 
 /* _parsing.c */
 
-int		_parser_parse(t_parser *parser, int argc, const char **argv);
+int		_parser_parse(
+	t_parser *parser,
+	int argc,
+	const char **argv
+);
 
 /* _memory.c */
+
+void	_destroy_args(
+	t_args *args
+);
+
+void	_destroy_options(
+	t_option *options
+);
+
+void	*_destroy_parser(
+	t_parser *parser
+);
 
 #endif	// _ARGS_H
