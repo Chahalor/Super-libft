@@ -1,2 +1,3 @@
 # Super-libft
-An under steroid version of the libft
+
+The libft but under steroide
