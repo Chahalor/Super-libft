@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is.h                                               :+:      :+:    :+:   */
+/*   char.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/02 08:19:51 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/04/02 08:36:24 by nduvoid          ###   ########.fr       */
+/*   Created: 2025/04/02 08:36:43 by nduvoid           #+#    #+#             */
+/*   Updated: 2025/04/02 08:39:04 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef IS_H
-# define IS_H
+#ifndef CHAR_H
+# define CHAR_H
 
 # pragma once
 
@@ -43,21 +43,14 @@
 	//...
 
 /* Global */
-	// is_char.c
+	// from_to.c
 
-int	ft_isdigit(const int c);
-int	ft_isalpha(const int c);
-int	ft_isalnum(const int c);
-int	ft_isascii(const int c);
-int	ft_isprint(const int c);
-
-	// is_str.c
-
-int	ft_isnumber(const char *str);
+int	ft_toupper(int c);
+int	ft_tolower(int c);
 
 /* Static */
 	//...
 
 # pragma endregion	/* Prototypes */
 
-#endif	/* IS_H */
+#endif	/* CHAR_H */
