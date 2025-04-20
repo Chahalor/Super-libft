@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 08:20:14 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/04/17 18:21:09 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/04/20 11:37:58 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@
 
 typedef enum e_types	t_types;	/**/
 
+typedef union u_value	t_value;	/**/
+
 typedef struct s_args	t_args;		/**/
 typedef struct s_option	t_option;	/**/
 typedef struct s_parser	t_parser;	/**/
@@ -63,18 +65,24 @@ enum e_types
 };
 
 /* ************************************************************************** */
+/*                                 Unions                                     */
+/* ************************************************************************** */
+
+union u_value
+{
+	int		i_value;	/**/
+	char	*s_value;	/**/
+	t_bool	b_value;	/**/
+};
+
+/* ************************************************************************** */
 /*                                 Struct                                     */
 /* ************************************************************************** */
 
 struct s_args
 {
 	t_types	type;				/**/
-	union u_value
-	{
-		int		i_value;
-		char	*s_value;
-		t_bool	b_value	: 1;
-	}		value;				/**/
+	t_value	value;				/**/
 	t_bool	mandatory	: 1;	/**/
 	t_args	*next;				/**/
 };
@@ -85,12 +93,13 @@ struct s_option
 	char	*doc;			/**/
 	t_args	*argument;		/**/
 	int		id;				/**/
-	t_boll	builtin	: 1;	/**/
+	t_bool	builtin	: 1;	/**/
 };
 
 struct s_parser
 {
 	t_option	**options;				/**/
+	t_args		*args;					/**/
 	int			nb_options;				/**/
 	void		(*destroy)(t_parser *);								/**/
 	int			(*parse)(t_parser *, int, const char **);			/**/
@@ -113,7 +122,7 @@ void		*parser_destroy(
 int			add_option(
 	t_parser *parser,
 	char *name,
-	char *doc
+	char *doc,
 	t_types type
 );
 

@@ -6,13 +6,13 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 08:20:10 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/04/17 18:03:10 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/04/20 11:36:28 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma region "Includes"
 
-#include "args-parser.h"
+#include "args_parser.h"
 #include "_args.h"
 
 #pragma endregion Includes
@@ -42,7 +42,7 @@ __attribute__((cold)) void	*parser_destroy(
 __attribute__((cold)) int	add_option(
 	t_parser *parser,
 	char *name,
-	char *doc
+	char *doc,
 	t_types type
 )
 {
