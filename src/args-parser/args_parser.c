@@ -6,16 +6,19 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 08:20:10 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/04/20 11:36:28 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/04/21 11:15:44 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma region "Includes"
+#pragma region Headers
 
+/* -----| interface |----- */
 #include "args_parser.h"
+
+/* -----| Internal  |----- */
 #include "_args.h"
 
-#pragma endregion Includes
+#pragma endregion Headers
 #pragma region Functions
 
 /**
@@ -37,31 +40,6 @@ __attribute__((cold)) void	*parser_destroy(
 }
 
 /**
- * return the option id
- */
-__attribute__((cold)) int	add_option(
-	t_parser *parser,
-	char *name,
-	char *doc,
-	t_types type
-)
-{
-	return (_add_option(parser, name, doc, type));
-}
-
-/**
- * return the option
- */
-__attribute__((cold)) t_args	get_option(
-	t_parser *parser,
-	void *option_id,
-	int type
-)
-{
-	return (_get_option(parser, option_id, type));
-}
-
-/**
  * return the number of options parsed
  */
 __attribute__((cold)) int	parse(
@@ -73,7 +51,7 @@ __attribute__((cold)) int	parse(
 	return (_parse(parser, argc, argv));
 }
 
-int main(int argc, const char **argv)
+int	main(int argc, const char **argv)
 {
 	t_parser	*parser;
 

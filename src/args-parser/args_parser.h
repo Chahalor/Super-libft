@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 08:20:14 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/04/20 11:37:58 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/04/21 11:13:10 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,13 @@ struct s_parser
 	t_option	**options;				/**/
 	t_args		*args;					/**/
 	int			nb_options;				/**/
-	void		(*destroy)(t_parser *);								/**/
-	int			(*parse)(t_parser *, int, const char **);			/**/
-	int			(*add_option)(t_parser *, char *, char *, t_types);	/**/
-	t_args		(*get_option)(t_parser *, void *, int);				/**/
+	void		(*destroy)(t_parser *);									/**/
+	int			(*parse)(t_parser *, int, const char **);				/**/
+	int			(*add_option)(t_parser *, char *, char *, t_types);		/**/
+	int			(*add_argument)(t_parser *, char *, char *, t_types);	/**/
+	void		*(*get_options)(t_parser *);				/**/
+	void		*(*get_arguments)(t_parser *);				/**/
+	
 };
 
 /* ************************************************************************** */
@@ -126,10 +129,12 @@ int			add_option(
 	t_types type
 );
 
-t_args		get_option(
-	t_parser *parser,
-	void *option_id,
-	int type
+void		*get_option(
+	t_parser *parser
+);
+
+void		*get_arguments(
+	t_parser *parser
 );
 
 int			parse(
