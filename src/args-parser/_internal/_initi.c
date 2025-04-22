@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:48:23 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/04/17 18:26:44 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/04/22 11:09:40 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ __attribute__((cold, malloc, visibility("hidden"))) t_parser	*_parser_init(
 		.destroy = parser_destroy,
 		.parse = parse,
 		.add_option = add_option,
-		.get_option = get_option,
+		.get_options = get_option,
+		.get_arguments = get_arguments,
 	};
 	return (new_parser);
 }

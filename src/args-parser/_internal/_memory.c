@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:40:28 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/04/17 18:09:46 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/04/22 11:08:38 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,6 @@ __attribute__((cold, visibility("hidden"))) void	_destroy_options(
 	{
 		if (options->name)
 			free(options->name);
-		if (options->short_option)
-			free(options->short_option);
-		if (options->long_option)
-			free(options->long_option);
 		if (options->doc)
 			free(options->doc);
 		if (options->argument)
@@ -82,8 +78,12 @@ __attribute__((cold, visibility("hidden"))) void	*_destroy_parser(
 		return ;
 	i = -1;
 	while (++i < parser->nb_options)
-		if (parser->options[i])
+		if (parser->options[i] && !parser->options[i]->builtin)
 			destroy_options(parser->options[i]);
+	i = -1;
+	while (++i < parser->nb_args)
+		if (parser->args[i])
+			destroy_args(parser->args[i]);
 	free(parser->options);
 }
 

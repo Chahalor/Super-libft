@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _args.h                                            :+:      :+:    :+:   */
+/*   memory.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/17 12:49:37 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/04/22 14:59:12 by nduvoid          ###   ########.fr       */
+/*   Created: 2025/04/22 11:42:02 by nduvoid           #+#    #+#             */
+/*   Updated: 2025/04/22 11:55:36 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _ARGS_H
-# define _ARGS_H
+#ifndef MEMORY_H
+# define MEMORY_H
 
 #pragma once
 
@@ -20,30 +20,29 @@
 /* ************************************************************************** */
 
 /* Systeme */
-# include <stdlib.h>
+	//...
 
 /* Global */
-# include "../standare/type.h"
+# include "type.h"
 
 /* Modules */
 	// ...
 
 /* Internal */
-# include "args_parser.h"
-#include "formating.h"
+	//...
 
 /* ************************************************************************** */
 /*                                 Defines                                    */
 /* ************************************************************************** */
 
-# define NB_BUILTIN_OPTIONS	1
+# define BUCKET_SIZE		1024	/**/
 
 /* ************************************************************************** */
 /*                                 Typedefs                                   */
 /* ************************************************************************** */
 
-typedef struct s_error	t_error;		/**/
-
+typedef struct s_hmap_node	t_hmap_node;	/**/
+typedef struct s_hmap		t_hmap;			/**/
 
 /* ************************************************************************** */
 /*                                 Enums                                      */
@@ -55,41 +54,27 @@ typedef struct s_error	t_error;		/**/
 /*                                 Struct                                     */
 /* ************************************************************************** */
 
-struct s_error
+struct s_hmap_node
 {
-	t_args_error	error;	/* the errno of the error                    */
-	int				index;	/* the index of the current argument         */
-	int				pos;	/* the position of the error in the argument */
+	char	*key;		/**/
+	void	*value;		/**/
+	t_hmap_node	*next;	/**/
+};
+
+struct s_hmap
+{
+	t_hmap_node	*bucket[BUCKET_SIZE];	/**/
+	int			size;				/**/
+	int			count;				/**/
+	int			(*hash)(const char *);					/**/
+	int			(*compare)(const char *, const char *);	/**/
+	void		(*destroy)(void *);						/**/
 };
 
 /* ************************************************************************** */
 /*                                 Prototypes                                 */
 /* ************************************************************************** */
 
-/* _init.c */
+//...
 
-t_parser	*_parser_init(void);
-
-/* _parser.c */
-
-int	_parse(
-	t_parser *parser,
-	int argc,
-	const char **argv
-);
-
-/* _memory.c */
-
-void	_destroy_args(
-	t_args *args
-);
-
-void	_destroy_options(
-	t_option *options
-);
-
-void	*_destroy_parser(
-	t_parser *parser
-);
-
-#endif	// _ARGS_H
+#endif	/* MEMORY_H */

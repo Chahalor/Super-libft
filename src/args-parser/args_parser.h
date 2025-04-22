@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 08:20:14 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/04/21 11:13:10 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/04/22 14:38:18 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,14 @@
 /*                                 Typedefs                                   */
 /* ************************************************************************** */
 
-typedef enum e_types	t_types;	/**/
+typedef enum e_types		t_types;		/**/
+typedef enum e_args_error	t_args_error;	/**/
 
-typedef union u_value	t_value;	/**/
+typedef union u_value		t_value;		/**/
 
-typedef struct s_args	t_args;		/**/
-typedef struct s_option	t_option;	/**/
-typedef struct s_parser	t_parser;	/**/
+typedef struct s_args		t_args;			/**/
+typedef struct s_option		t_option;		/**/
+typedef struct s_parser		t_parser;		/**/
 
 /* ************************************************************************** */
 /*                                 Enums                                      */
@@ -62,6 +63,17 @@ enum e_types
 	e_flag,	/**/
 	e_int,	/**/
 	e_str,	/**/
+};
+
+enum e_args_error
+{
+	e_no_error,				/**/
+	e_invalid_option,		/**/
+	e_invalid_argument,		/**/
+	e_missing_argument,		/**/
+	e_unknown_option,		/**/
+	e_too_many_arguments,	/**/
+	e_invalid_type			/**/
 };
 
 /* ************************************************************************** */
@@ -85,6 +97,7 @@ struct s_args
 	t_value	value;				/**/
 	t_bool	mandatory	: 1;	/**/
 	t_args	*next;				/**/
+	t_bool	parsed	: 1;		/**/
 };
 
 struct s_option
@@ -94,20 +107,21 @@ struct s_option
 	t_args	*argument;		/**/
 	int		id;				/**/
 	t_bool	builtin	: 1;	/**/
+	t_bool	used	: 1;	/**/
 };
 
 struct s_parser
 {
 	t_option	**options;				/**/
-	t_args		*args;					/**/
+	t_args		**args;					/**/
 	int			nb_options;				/**/
+	int			nb_args;				/**/
 	void		(*destroy)(t_parser *);									/**/
 	int			(*parse)(t_parser *, int, const char **);				/**/
 	int			(*add_option)(t_parser *, char *, char *, t_types);		/**/
 	int			(*add_argument)(t_parser *, char *, char *, t_types);	/**/
 	void		*(*get_options)(t_parser *);				/**/
 	void		*(*get_arguments)(t_parser *);				/**/
-	
 };
 
 /* ************************************************************************** */
