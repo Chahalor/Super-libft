@@ -103,6 +103,8 @@ NAME		:= $EXEC_NAME
 
 CC			:= $CC
 CFLAGS		:= $CFLAGS
+AR			:= ar
+ARFLAGS		:= rcs
 DEBUGFLAGS	:= $DEBUGFLAGS
 DIR_SRC		:= $DIR_SRC
 DIR_OBJ		:= $DIR_OBJ
@@ -122,9 +124,40 @@ OBJ_ALL		:=$OBJ_ALL_LIST \$(OBJ_MAIN)
 # *                    Rules                          * #
 # ***************************************************** #
 
-.PHONY: all
+.PHONY: all libft advanced
 
-all: header norm \$(NAME) install
+all: header norm libft $(NAME)
+
+libft: base
+
+advanced: libft printf gnl memory string list args \$(NAME)
+
+# ***************************************************** #
+# *                    Modules                        * #
+# ***************************************************** #
+
+.PHONY: base printf gnl memory string list args
+
+# the default libft module
+base:
+
+# ft_printf and all other printf
+printf:
+
+# get_next_line
+gnl:
+
+# all memory fonctions
+memory:
+
+# all string fonctions
+string:
+
+# all list fonctions
+list:
+
+# the args parser
+args:
 
 # ***************************************************** #
 # *                  Compiling                        * #

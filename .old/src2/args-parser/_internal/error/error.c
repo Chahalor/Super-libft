@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:59:38 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/04/22 15:09:56 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/05/03 11:09:16 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ __attribute__((cold)) void show_error(
 	const char **argv
 )
 {
-	register int	i;
+	register int		i;
 	static const char	*error_messages[] = {
 		[e_no_error] = "",
 		[e_invalid_option] = "Invalid option",

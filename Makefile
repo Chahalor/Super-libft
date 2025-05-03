@@ -7,125 +7,152 @@
 MAKEFLAGS += --no-print-directory
 
 # ***************************************************** #
-# *                    Variables                      * #
+# *                 Variables                         * #
 # ***************************************************** #
 
+# Compilation
 NAME		:= libft.a
-
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror -MMD
-DEBUGFLAGS	:= 
+CFLAGS		:= -Wall -Wextra -Werror
+AR			:= ar
+ARFLAGS		:= rcs
+
+# Directories
 DIR_SRC		:= src
-DIR_OBJ		:= .obj
-DIR_BONUS	:= 
-INCLUDE_ALL	:=-I./ -I -I$(DIR_SRC)/args -I$(DIR_SRC)/char-change -I$(DIR_SRC)/error -I$(DIR_SRC)/ft_printf -I$(DIR_SRC)/get_next_line -I$(DIR_SRC)/is -I$(DIR_SRC)/linked-list -I$(DIR_SRC)/memory -I$(DIR_SRC)/micellaneous -I$(DIR_SRC)/put -I$(DIR_SRC)/str -I$(DIR_SRC)/str-change
+DIR_BUILD	:= .build
+DIR_HEADER	:=
 
-# Here we include all the makefile.mk files
-include  src/args/makefile.mk src/char-change/makefile.mk src/error/makefile.mk src/ft_printf/makefile.mk src/get_next_line/makefile.mk src/is/makefile.mk src/linked-list/makefile.mk src/memory/makefile.mk src/micellaneous/makefile.mk src/put/makefile.mk src/str/makefile.mk src/str-change/makefile.mk
+# Source files
+SRC_MEMORY	:=
+SRC_STRING	:=
+SRC_LIST	:=
+SRC_MATH	:=
+SRC_ARGS	:=
+include $(DIR_SRC)/memory_manager/makefile.mk
+SRC_PRINTF	:=
+SRC_GNL		:=
 
-SRC_MAIN	:=
+# Object files
+OBJ_MEMORY	:= $(patsubst $(DIR_SRC)/%.c,$(DIR_BUILD)/%.o,$(SRC_MEMORY))
+OBJ_STRING	:= $(patsubst $(DIR_SRC)/%.c,$(DIR_BUILD)/%.o,$(SRC_STRING))
+OBJ_LIST	:= $(patsubst $(DIR_SRC)/%.c,$(DIR_BUILD)/%.o,$(SRC_LIST))
+OBJ_MATH	:= $(patsubst $(DIR_SRC)/%.c,$(DIR_BUILD)/%.o,$(SRC_MATH))
+OBJ_ARGS	:= $(patsubst $(DIR_SRC)/%.c,$(DIR_BUILD)/%.o,$(SRC_ARGS))
+OBJ_MM		:= $(patsubst $(DIR_SRC)/%.c,$(DIR_BUILD)/%.o,$(SRC_MM))
+OBJ_PRINTF	:= $(patsubst $(DIR_SRC)/%.c,$(DIR_BUILD)/%.o,$(SRC_PRINTF))
+OBJ_GNL		:= $(patsubst $(DIR_SRC)/%.c,$(DIR_BUILD)/%.o,$(SRC_GNL))
+OBJ_ALL		:= $(OBJ_MM_ALL)
 
-# all object files for the modules
-OBJ_MAIN	:= $(addprefix $(DIR_OBJ)/, $(SRC_MAIN:.c=.o))
-OBJ_ALL		:= $(OBJ_ARGS) $(OBJ_CHAR-CHANGE) $(OBJ_ERROR) $(OBJ_FT_PRINTF) $(OBJ_GET_NEXT_LINE) $(OBJ_IS) $(OBJ_LINKED-LIST) $(OBJ_MEMORY) $(OBJ_MICELLANEOUS) $(OBJ_PUT) $(OBJ_STR) $(OBJ_STR-CHANGE) $(OBJ_MAIN)
-
-# ***************************************************** #
-# *                    Rules                          * #
-# ***************************************************** #
-
-.PHONY: all
-
-all: header norm $(NAME) install
-
-# ***************************************************** #
-# *                  Compiling                        * #
-# ***************************************************** #
-
-$(NAME): $(OBJ_ALL)
-	@ar rcs $(NAME) $(OBJ_ALL)
-	@ranlib $(NAME)
-
-$(DIR_OBJ)/%.o: $(DIR_SRC)/%.c
-	@mkdir -p $(DIR_OBJ)
-	$(CC) $(CFLAGS) $(DEBUGFLAGS) $(INCLUDE_ALL) -c $< -o $@
 
 # ***************************************************** #
-# *                    Clean Rules                    * #
+# *                 Compiling Tag                     * #
+# ***************************************************** #
+
+# Compiling Tag
+
+TAG_LIBFT		= false	# default libft
+TAG_ADVANCED	= false	# advanced
+
+MODULES := MEMORY STRING LIST MATH ARGS MM PRINTF GNL
+
+# Initialise tous les TAG_* à false
+$(foreach m,$(MODULES),$(eval TAG_$(m) := false))
+
+GROUP_LIBFT := MEMORY STRING
+GROUP_ADVANCED := LIST MATH ARGS MM PRINTF GNL
+
+# ***************************************************** #
+# *                 Rules                             * #
+# ***************************************************** #
+
+.PHONY: all bonus libft advanced printf gnl memory string list math args mm
+
+# Rules
+
+all: libft $(NAME)
+
+bonus: list libft $(NAME)
+
+libft:
+	$(foreach m,$(GROUP_LIBFT),$(eval TAG_$(m) := true))
+
+advanced:
+	$(foreach m,$(GROUP_ADVANCED),$(eval TAG_$(m) := true))
+
+	$(foreach m,$(MODULES),$(eval $(shell echo $(m) | tr A-Z a-z)): $(eval TAG_$(m) := true))
+
+# ***************************************************** #
+# *                 Internal                          * #
+# ***************************************************** #
+
+.PHONY: update_obj
+
+update_obj:
+	$(foreach m,$(MODULES),\
+		$(if $(filter true,$(TAG_$(m))),\
+			$(eval OBJ_ALL += $(OBJ_$(m)))\
+		)\
+	)
+
+define generate_tag_rule
+$(1):
+	$(eval TAG_$(shell echo $(1) | tr a-z A-Z) := true)
+endef
+
+# ***************************************************** #
+# *                 Compilation                       * #
+# ***************************************************** #
+
+compile: update_obj $(NAME)
+
+$(DIR_BUILD)/%.o: $(DIR_SRC)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -I $(DIR_HEADER) -c $< -o $@
+
+$(NAME): update_obj
+	$(AR) $(ARFLAGS) $@ $(OBJ_ALL)
+
+# ***************************************************** #
+# *                 Clean                            * #
 # ***************************************************** #
 
 .PHONY: clean fclean re
 
 clean:
-	rm -rf $(DIR_OBJ)
-# @make clean -C $(DIR_LIBFT)
-# @make clean -C $(DIR_BONUS)
+	@rm -rf $(DIR_BUILD)
 
 fclean: clean
-	rm -f $(NAME)
-# @make fclean -C $(DIR_LIBFT)
-# @make fclean -C $(DIR_BONUS)
+	@rm -f $(NAME)
 
 re: fclean all
 
 # ***************************************************** #
-# *                    Debug Rules                    * #
+# *                 Debugging                         * #
 # ***************************************************** #
 
-.PHONY: debug debug.fsanitize debug.fs debug.pg
+.PHONY: debug debug.fs
 
 debug:
-	$(eval DEBUGFLAGS=$(DEBUGFLAGS) -g3 -D DEBUG=1)
-	@echo "\033[1;33m DEBUG MODE ACTIVATED \033[0m"
+	$(eval CFLAGS := $(CFLAGS) -g3)
 
+debug.fs: debug
+	$(eval CFLAGS := $(CFLAGS) -fsanitize=address)
 
-debug.fsanitize: debug
-	$(eval DEBUGFLAGS=$(DEBUGFLAGS) -fsanitize=address)
-
-debug.fs: debug.fsanitize
-
-debug.pg:
-	$(eval DEBUGFLAGS=$(DEBUGFLAGS) -pg)
-
-# ***************************************************** #
-# *                      Utils                        * #
-# ***************************************************** #
-
-.PHONY: header norm crazy test install uninstall update
-
-header:
-	@echo "# Big Header #"
-
-norm:
-	@errors=$$(norminette --use-gitignore | grep "Error"); \
-	if [ -n "$$errors" ]; then \
-		echo "$$errors"; \
-		echo "\033[31m ❌ Norminette errors found \033[0m"; \
-	else \
-		echo "\033[1;32m ✅ Norminette Ok\033[0m"; \
-	fi
-
-# INSTALL_DIR = $(HOME)/.local/bin
-
-# install:
-# 	mkdir -p $(INSTALL_DIR)
-# 	cp $(NAME) $(INSTALL_DIR)/
-# 	chmod +x $(INSTALL_DIR)/$(NAME)
-# 	echo "\033[1;32m ✅ $(NAME) installed to $(INSTALL_DIR) \033[0m"; \
-
-# uninstall:
-# 	rm -rf $(INSTALL_DIR)/$(NAME)
-# 	echo "\033[1;32m ✅ $(NAME) uninstalled from $(INSTALL_DIR) \033[0m";
-
-update:
-	if [ -f ./auto.sh ]; then \
-		echo "\033[1;33m Updating Makefile... \033[0m"; \
-	else \
-		echo "\033[1;31m auto.sh not found, please add the script to automate the update \033[0m"; \
-		exit 1; \
-	fi
-	./auto.sh
-	echo "\033[1;32m ✅ Makefile updated \033[0m";
-
-.SILENT:
-	@echo "\033[1;33m SILENT MODE ACTIVATED \033[0m
-
+info:
+	@echo "CFLAGS: $(CFLAGS)"
+	@echo "ARFLAGS: $(ARFLAGS)"
+	@echo "CC: $(CC)"
+	@echo "AR: $(AR)"
+	@echo "NAME: $(NAME)"
+	@echo "DIR_SRC: $(DIR_SRC)"
+	@echo "DIR_BUILD: $(DIR_BUILD)"
+	@echo "DIR_HEADER: $(DIR_HEADER)"
+	@echo "SRC_MEMORY: $(SRC_MEMORY)"
+	@echo "SRC_STRING: $(SRC_STRING)"
+	@echo "SRC_LIST: $(SRC_LIST)"
+	@echo "SRC_MATH: $(SRC_MATH)"
+	@echo "SRC_ARGS: $(SRC_ARGS)"
+	@echo "SRC_MM: $(SRC_MM)"
+	@echo "SRC_PRINTF: $(SRC_PRINTF)"
+	@echo "SRC_GNL: $(SRC_GNL)"
+	@echo "OBJ_ALL: $(OBJ_ALL)"
