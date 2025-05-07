@@ -6,11 +6,9 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 12:20:09 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/05/03 16:14:45 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/05/07 14:27:18 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#pragma once
 
 #pragma region Headers
 
@@ -25,81 +23,85 @@
 
 /** */
 __attribute__((always_inline)) static inline void	_add_to_bucket(
-	t_mm_node *bucket,
-	const int index,
-	void *ptr
+	t_mm_node *restrict bucket,
+	void *restrict ptr
 )
 {
-	t_mm_node		*node;
+	const t_mm_node	*restrict	node = (t_mm_node *)ptr;
+	const int					index = (size_t)node->ptr % MM_BUCKET_SIZE;
+	t_mm_node		*restrict	current;
 
-	node = &bucket[index].next;
-	while (node)
-		node = node->next;
-	node->ptr = ptr;
-	node->next = NULL;
+	current = &bucket[index];
+	while (current->next)
+		current = current->next;
+	current->next = (t_mm_node *)node;
 }
 
 /** */
 __attribute__((always_inline)) static inline void	_free_one(
-	t_mm_node *bucket,
-	void *ptr
+	t_mm_node *restrict bucket,
+	void *restrict ptr
 )
 {
-	const int	index = (size_t)ptr % MM_BUCKET_SIZE;
-	t_mm_node	*node;
+	const int				index = (size_t)ptr % MM_BUCKET_SIZE;
+	t_mm_node	*restrict	current;
+	t_mm_node	*restrict	last;
 
-	node = &bucket[index];
-	while (node)
+	current = &bucket[index];
+	while (current->next && current->ptr != ptr)
 	{
-		if (node->ptr == ptr)
-		{
-			free(node->ptr);
-			node->ptr = NULL;
-			break ;
-		}
-		node = node->next;
+		last = current;
+		current = current->next;
+	}
+	if (current->ptr == ptr)
+	{
+		if (last)
+			last->next = current->next;
+		free(current);
+		current = NULL;
 	}
 }
 
 /** */
 __attribute__((always_inline)) static inline void	_free_all_bucket(
-	t_mm_node *bucket
+	t_mm_node *restrict bucket
 )
 {
-	register int	i;
-	t_mm_node		*node;
+	int						i;
+	t_mm_node	*restrict	current;
+	t_mm_node	*restrict	next;
 
 	i = -1;
 	while (++i < MM_BUCKET_SIZE)
 	{
-		node = &bucket[i];
-		while (node)
+		current = bucket[i].next;
+		next = NULL;
+		while (current)
 		{
-			if (node->ptr)
-			{
-				free(node->ptr);
-				node->ptr = NULL;
-			}
-			node = node->next;
-		}
+			next = current->next;
+			free(current);
+			current = next;
+		};
+		bucket[i].next = NULL;
+		bucket[i].ptr = NULL;
 	}
 }
 
 /** */
 __attribute__((visibility("hidden"))) void	*_mm_store(
-	void *ptr,
+	void *restrict ptr,
 	const int access
 )
 {
 	static t_mm_node	bucket[MM_BUCKET_SIZE] = {0};
-	const int			index = (size_t)ptr % MM_BUCKET_SIZE;
 
 	if (access == mm_add)
-		_add_to_bucket(bucket, index, ptr);
-	else if (access == mm_free)
+		_add_to_bucket(bucket, ptr);
+	else if (access == mm_freeing)
 		_free_one(bucket, ptr);
 	else if (access == mm_free_all)
 		_free_all_bucket(bucket);
+	return (ptr);
 }
 
 #pragma endregion Functions

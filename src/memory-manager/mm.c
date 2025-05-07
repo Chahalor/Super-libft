@@ -6,11 +6,9 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 12:11:57 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/05/03 16:18:27 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/05/07 13:56:57 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#pragma once
 
 #pragma region Headers
 
@@ -28,13 +26,17 @@ __attribute__((malloc)) void	*mm_alloc(
 	const size_t size
 )
 {
-	void	*ptr;
+	t_mm_node	*node;
 
-	ptr = malloc(size);
-	if (ptr == NULL)
-		perror("mm_alloc: malloc failed");
-	_mm_store(ptr, mm_add);
-	return (ptr);
+	if (size < 1)
+		return (NULL);
+	node = (t_mm_node *)malloc(sizeof(t_mm_node) + size);
+	if (node == NULL)
+		return (NULL);
+	node->ptr = (void *)(node + 1);
+	node->next = NULL;
+	_mm_store(node, mm_add);
+	return (node->ptr);
 }
 
 /** */
@@ -44,7 +46,7 @@ __attribute__(()) void	mm_free(
 {
 	if (ptr == NULL)
 		return ;
-	_mm_store(ptr, mm_free);
+	_mm_store(ptr, mm_freeing);
 }
 
 /** */
