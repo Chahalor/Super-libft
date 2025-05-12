@@ -9,6 +9,8 @@
 ## GNL
 
 ## Other .c
+### memory manager:
+ - [X] mm_realloc(): (invalide read) and (segfault when freed)
 
 ## Header
 
