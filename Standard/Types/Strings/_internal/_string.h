@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Strings.h                                          :+:      :+:    :+:   */
+/*   _string.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:08:18 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/05/26 19:13:00 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/05/26 20:16:39 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRINGS_H
-# define STRINGS_H
+#ifndef _STRINGS_H
+# define _STRINGS_H
 
 # pragma once
 
@@ -21,21 +21,28 @@
 
 /* -----| Systems   |----- */
 # include <stddef.h>
+# include <stdlib.h>
 
 /* -----| Globals   |----- */
 	//...
 
 /* -----| Internals |----- */
-	//...
+# include "Strings.h"
 
 /* -----| Modules   |----- */
 	// ...
 
 /* ************************************************************************** */
+/*                                 Macros                                     */
+/* ************************************************************************** */
+
+# define STRING_ALLOC_SIZE 256	/* Default allocation size for strings */
+
+/* ************************************************************************** */
 /*                                 Typedefs                                   */
 /* ************************************************************************** */
 
-typedef struct s_string	t_string;
+typedef struct s_string_	t_string_;	/* internal string struct */
 
 /* ************************************************************************** */
 /*                                 Enums                                      */
@@ -46,20 +53,10 @@ typedef struct s_string	t_string;
 /* ************************************************************************** */
 /*                                 Structs                                    */
 /* ************************************************************************** */
-
-struct s_string
+struct s_string_
 {
-	char		*str;
-	size_t		len;
-	t_string	(*append)(t_string *str1, const char *str2);
-	size_t		(*find)(const t_string *str, const char *substr);
-	void		(*clear)(t_string *str);	/* Will free the string */
+	size_t		alloc_size;	/* Allocated size of the string         */
+	t_string	*strings;	/* Pointer to the string public struct */
 };
 
-/* ************************************************************************** */
-/*                                 Prototypes                                 */
-/* ************************************************************************** */
-
-// ...
-
-#endif // STRINGS_H
+#endif // _STRINGS_H
