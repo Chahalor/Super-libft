@@ -1,0 +1,26 @@
+./Super-libft
+├── .dev
+├── .tester
+│    └── many tests for each module
+├── .docs
+│    └── documentation for each module
+├── src
+│   ├── string
+│       └── ...
+│   ├── memory
+│       └── ...
+│   ├── math
+│       └── ...
+│   └── ...
+├── Standard
+│   ├── Types
+│   ├── Functions
+│   └── Macros
+├── .gitignore
+├── README.md
+├── LICENSE
+├── Makefile
+└── all .h header files
+
+So we can call the library like this:
+#include "Super-libft/string.h" ou #include "Super-libft/memory.h"
