@@ -5,91 +5,73 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/17 12:49:37 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/04/22 14:59:12 by nduvoid          ###   ########.fr       */
+/*   Created: 2025/06/24 08:23:29 by nduvoid           #+#    #+#             */
+/*   Updated: 2025/06/24 08:42:08 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _ARGS_H
 # define _ARGS_H
 
-#pragma once
+# pragma once
 
 /* ************************************************************************** */
 /*                                 Headers                                    */
 /* ************************************************************************** */
 
-/* Systeme */
-# include <stdlib.h>
+/* Systeme  */
+	//...
 
-/* Global */
-# include "../standare/type.h"
+/* Global   */
+	//...
 
-/* Modules */
-	// ...
+/* Modules  */
+# include "args_parser.h"
 
 /* Internal */
-# include "args_parser.h"
-#include "formating.h"
-
-/* ************************************************************************** */
-/*                                 Defines                                    */
-/* ************************************************************************** */
-
-# define NB_BUILTIN_OPTIONS	1
+	//...
 
 /* ************************************************************************** */
 /*                                 Typedefs                                   */
 /* ************************************************************************** */
 
-typedef struct s_error	t_error;		/**/
-
+typedef struct s_args		t_args;			/**/
 
 /* ************************************************************************** */
 /*                                 Enums                                      */
 /* ************************************************************************** */
 
-//...
-
-/* ************************************************************************** */
-/*                                 Struct                                     */
-/* ************************************************************************** */
-
-struct s_error
+enum e_args_access
 {
-	t_args_error	error;	/* the errno of the error                    */
-	int				index;	/* the index of the current argument         */
-	int				pos;	/* the position of the error in the argument */
+	e_args_add,
+	e_args_get,
+	e_args_parse
+}
+
+enum e_args_access
+{
+	e_access_args,
+	e_access_options
+}
+
+/* ************************************************************************** */
+/*                                 Structs                                    */
+/* ************************************************************************** */
+
+struct s_access
+{
+	void	*data;	// Data to be added or retrieved
+	char	access;	// Access type ()
+}
+
+struct s_parser
+{
+	t_args		args[MAX_ARGS];
+	t_option	options[MAX_OPTIONS];
+	int			nb_args;
+	int			nb_options;
+	int			error_code;
+	char		first_access	: 1;
 };
 
-/* ************************************************************************** */
-/*                                 Prototypes                                 */
-/* ************************************************************************** */
-
-/* _init.c */
-
-t_parser	*_parser_init(void);
-
-/* _parser.c */
-
-int	_parse(
-	t_parser *parser,
-	int argc,
-	const char **argv
-);
-
-/* _memory.c */
-
-void	_destroy_args(
-	t_args *args
-);
-
-void	_destroy_options(
-	t_option *options
-);
-
-void	*_destroy_parser(
-	t_parser *parser
-);
-
-#endif	// _ARGS_H
+#endif	/* !_ARGS_H */

@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 08:20:14 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/04/22 14:38:18 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/06/24 08:39:19 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@
 # include <errno.h>
 
 /* Global   */
-# include "type.h"
+	//...
 
 /* Modules  */
 	//...
 
 /* Internal */
-# include "_internal/_args.h"
+# include "_internal_/_args.h"
 
 /* ************************************************************************** */
 /*                                 Defines                                    */
@@ -39,6 +39,9 @@
 # define PARSER_MAJOR		0
 # define PARSER_MINOR		1
 # define PARSER_PATCH		0
+
+# define MAX_ARGS			128		/**/
+# define MAX_OPTIONS		64		/**/
 
 /* ************************************************************************** */
 /*                                 Typedefs                                   */
@@ -84,77 +87,41 @@ union u_value
 {
 	int		i_value;	/**/
 	char	*s_value;	/**/
-	t_bool	b_value;	/**/
+	char	b_value;	/**/
 };
 
 /* ************************************************************************** */
 /*                                 Struct                                     */
 /* ************************************************************************** */
 
-struct s_args
+struct s_arg
 {
-	t_types	type;				/**/
-	t_value	value;				/**/
-	t_bool	mandatory	: 1;	/**/
-	t_args	*next;				/**/
-	t_bool	parsed	: 1;		/**/
-};
+	const char	*name;				// help
+	const char	*help_text;			// Aide pour l'option
+	char		*value;				// NULL ou la valeur passée
+	char		has_value	: 1;	// 0 = bool flag, 1 = requires value
+	char		is_set		: 1;	// 1 si présent dans argv
+}
 
 struct s_option
 {
-	char	*name;			/**/
-	char	*doc;			/**/
-	t_args	*argument;		/**/
-	int		id;				/**/
-	t_bool	builtin	: 1;	/**/
-	t_bool	used	: 1;	/**/
-};
+	const char	*name;				// Nom de l'option (ex: --help)
+	const char	*description;		// Description de l'option
+	t_types		type;				// Type de l'option (flag, int, str, etc.)
+	char		is_required	: 1;	// Indique si l'option est obligatoire
+}
 
-struct s_parser
+struct s_args
 {
-	t_option	**options;				/**/
-	t_args		**args;					/**/
-	int			nb_options;				/**/
-	int			nb_args;				/**/
-	void		(*destroy)(t_parser *);									/**/
-	int			(*parse)(t_parser *, int, const char **);				/**/
-	int			(*add_option)(t_parser *, char *, char *, t_types);		/**/
-	int			(*add_argument)(t_parser *, char *, char *, t_types);	/**/
-	void		*(*get_options)(t_parser *);				/**/
-	void		*(*get_arguments)(t_parser *);				/**/
-};
+	const char	*name;	// Nom de l'argument (ex: --output)
+	t_value		value;	// Valeur de l'argument
+	t_types		type;	// Type de l'argument (flag, int, str, etc.)
+}
 
 /* ************************************************************************** */
 /*                                 Prototypes                                 */
 /* ************************************************************************** */
 
-/* args_parser.c */
+//...
 
-t_parser	*parser_init(void);
-
-void		*parser_destroy(
-	t_parser *parser
-);
-
-int			add_option(
-	t_parser *parser,
-	char *name,
-	char *doc,
-	t_types type
-);
-
-void		*get_option(
-	t_parser *parser
-);
-
-void		*get_arguments(
-	t_parser *parser
-);
-
-int			parse(
-	t_parser *parser,
-	int argc,
-	const char **argv
-);
-
-#endif	/* ARGS_H */
+#endif	/* !ARGS_H */
