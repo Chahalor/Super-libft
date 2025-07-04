@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   _error_.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 08:38:21 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/04 09:07:15 by nduvoid          ###   ########.fr       */
+/*   Created: 2025/07/04 09:17:30 by nduvoid           #+#    #+#             */
+/*   Updated: 2025/07/04 09:17:48 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
+#ifndef _ERROR_H
+# define _ERROR_H
 
 # pragma once
 
@@ -19,22 +19,20 @@
 /*                                 Enums                                      */
 /* ************************************************************************** */
 
-enum	e_sft_errcode
+enum	e_error_access
 {
-	SFT_ERR_SUCCESS = 0,	/* No error                  */
-	SFT_ERR_NOMEM			/* Memory allocation failed */
+	err_register,	/* Register an error code      */
+	err_get,		/* Get the current error code */
+	err_str,		/* Get the error string      */
 };
 
 /* ************************************************************************** */
 /*                                 Prototypes                                 */
 /* ************************************************************************** */
 
-char	*sft_error_str(
-				const int error
+void	*_error_manager(
+				const int error,
+				const int access
 				);
 
-void	sft_perror(
-				const char *const restrict message
-				);
-
-#endif /* !ERROR_H */
+#endif /* !_ERROR_H */

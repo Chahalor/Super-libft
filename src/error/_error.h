@@ -1,40 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   _error.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 08:38:21 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/04 09:07:15 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/04 09:17:29 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
+#ifndef _ERROR_H
+# define _ERROR_H
 
 # pragma once
-
-/* ************************************************************************** */
-/*                                 Enums                                      */
-/* ************************************************************************** */
-
-enum	e_sft_errcode
-{
-	SFT_ERR_SUCCESS = 0,	/* No error                  */
-	SFT_ERR_NOMEM			/* Memory allocation failed */
-};
 
 /* ************************************************************************** */
 /*                                 Prototypes                                 */
 /* ************************************************************************** */
 
-char	*sft_error_str(
+char	_register_error(
 				const int error
 				);
 
-void	sft_perror(
-				const char *const restrict message
-				);
+int		_get_error(void);
 
-#endif /* !ERROR_H */
+#endif /* !_ERROR_H */
