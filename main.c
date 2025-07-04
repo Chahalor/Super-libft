@@ -6,16 +6,16 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 09:02:16 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/04 08:05:25 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/04 09:15:11 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 
+/*
 #include "strings/string.h"
-
-int main(void)
+static void	test_string(void)
 {
 	t_string	*str1 = new_t_string("Hello, ");
 	t_string	*str2 = new_t_string("World!");
@@ -26,7 +26,7 @@ int main(void)
 			str1->destroy(str1);
 		if (str2)
 			str2->destroy(str2);
-		return (1);
+		return ;
 	}
 	str1->append.t_string(str1, str2);
 	printf("Appended String: <%s> (%zu)\n", str1->str, str1->len);
@@ -45,5 +45,19 @@ int main(void)
 	str3->destroy(str3);
 	str2->destroy(str2);
 	str1->destroy(str1);
+}
+*/
+
+#include "error/error.h"
+static void	test_error(void)
+{
+	sft_perror("Test error message");
+
+	printf("Error string: <%s>\n", sft_error_str(SFT_ERR_SUCCESS));
+}
+
+int main(void)
+{
+	test_error();
 	return (0);
 }

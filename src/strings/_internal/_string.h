@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 08:23:37 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/02 13:33:14 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/04 08:12:33 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ typedef struct s_string				t_string;
 /*                                 Prototypes                                 */
 /* ************************************************************************** */
 
-t_string	*_sft_string_dup(
-				const t_string *const self
-				);
+//...
 
 #endif /* !_STRING_H */
