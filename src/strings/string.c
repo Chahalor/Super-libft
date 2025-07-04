@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/02 13:34:54 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/04 10:21:12 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 
 /* -----| System   |-----*/
 #include <stdlib.h>
-#include <stdio.h> //rm
 
 /* -----| Internal |-----*/
 #include "_string.h"
 #include "./string.h"
 
 /* -----| Module   |-----*/
-	//...
+#include "error/_error.h"
 
 #pragma endregion Header
 #pragma region Functions
@@ -107,10 +106,13 @@ t_string	*new_t_string(
 		return (NULL);
 	new_string = (t_string *)malloc(alloc_size);
 	if (!new_string)
-		return (NULL);
+		return (_register_error(SFT_ERR_NOMEM), NULL);
 	new_string = _string_init(new_string, str_len);
 	if (!new_string->str)
+	{
+		_register_error(SFT_ERR_NOMEM);
 		return (free(new_string), NULL);
+	}
 	_strlencpy(new_string->str, str, str_len);
 	return (new_string);
 }
