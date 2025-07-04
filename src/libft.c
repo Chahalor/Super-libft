@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 16:40:03 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/02 12:00:43 by nduvoid          ###   ########.fr       */
+/*   Created: 2025/07/02 11:54:52 by nduvoid           #+#    #+#             */
+/*   Updated: 2025/07/02 11:58:22 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
-
-typedef struct s_sft_string
+t_libft	*libft(void)
 {
-	char *(*strchr)(const char *s, int c);
-	char *(*strdup)(const char *s1);
-	
+	static t_libft	*instance = NULL;
+
+	if (!instance)
+	{
+		instance = malloc(sizeof(t_libft));
+		if (!instance)
+			return (NULL);
+	}
+	return (instance);
 }
 
-typedef struct s_libft
-{
-	struct s_sft_string	string;
-}	t_libft;
+#define libft	libft()
 
-#endif
+int main(int argc, char const *argv[])
+{
+
+	return (0);
+}

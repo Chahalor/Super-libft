@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/06/27 16:50:14 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/02 13:31:21 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 
 /* -----| Internal |-----*/
-#include "strings/string.h"
+#include "../../string.h"
 #include "_append.h"
 #include "_string.h"
 
@@ -26,8 +26,7 @@
 #pragma endregion Header
 #pragma region Functions
 
-__attribute__((always_inline, used))
-static inline size_t	ft_strlen(
+static inline size_t	_strlen(
 	const char *const restrict str
 )
 {
@@ -41,85 +40,60 @@ static inline size_t	ft_strlen(
 	return (len);
 }
 
-__attribute__((always_inline, used))
-static inline t_string_internal	*_realloc(
-	t_string_internal *const internal,
-	const size_t new_size
-)
-{
-	t_string		*new_data;
-	register size_t	i;
-
-	new_data = (t_string *)malloc(sizeof(t_string) + sizeof(char) * new_size);
-	if (!new_data)
-		return (NULL);
-	i = -1;
-	while (++i < internal->data->len)
-		new_data->str[i] = internal->data->str[i];
-	free(internal->data->str);
-	free(internal->data);
-	internal->data = new_data;
-	internal->alloc_size = new_size;
-	return (internal);
-}
-
-__attribute__((always_inline, used))
 static inline void	_cat(
-	const t_string *const self,
-	const char *const other,
-	const size_t other_len
+	const char *const restrict str1,
+	const char *const restrict str2,
+	char *const restrict dst
 )
 {
-	t_string_internal	*internal;
-	register int		i;
+	register size_t	i;
+	register size_t	j;
 
-	i = self->len - 1;
-	while (++i < (self->len + other_len))
-		self->str[i] = other[i - self->len];
-	self->str[self->len + other_len] = '\0';
-	internal = (t_string_internal *)(self - offsetof(t_string_internal, data));
-	internal->data->len += other_len;
+	i = -1;
+	while (str1[++i])
+		dst[i] = str1[i];
+	j = -1;
+	while (str2[++j])
+		dst[i + j] = str2[j];
+	dst[i + j] = '\0';
 }
 
+/** */
 __attribute__((visibility("hidden"), used)) t_string	*_sft_string_append(
-	const t_string *const self,
+	t_string *self,
 	const t_string *const other
 )
 {
-	t_string_internal	*internal;
+	const size_t		total = self->len + other->len + 1;
+	char				*tmp;
 
-	if (!self || !other)
+	tmp = (char *)malloc(sizeof(char) * total);
+	if (!tmp)
 		return (NULL);
-	internal = (t_string_internal *)(self - offsetof(t_string_internal, data));
-	if (self->len + other->len + 1 > internal->alloc_size)
-	{
-		internal = _realloc(internal, internal->alloc_size + other->len + 1);
-		if (!internal)
-			return (NULL);
-	}
-	_cat(self, other->str, other->len);
-	return (&internal->data);
+	_cat(self->str, other->str, tmp);
+	free(self->str);
+	self->str = tmp;
+	self->len = total - 1;
+	return (self);
 }
 
+/** */
 __attribute__((visibility("hidden"), used)) t_string	*_sft_string_append_chr(
-	const t_string *const self,
+	t_string *self,
 	const char *const other
 )
 {
-	const int			other_len = ft_strlen(other);
-	t_string_internal	*internal;
+	const size_t		total = self->len + _strlen(other) + 1;
+	char				*tmp;
 
-	if (!self)
+	tmp = (char *)malloc(sizeof(char) * total);
+	if (!tmp)
 		return (NULL);
-	internal = (t_string_internal *)(self - offsetof(t_string_internal, data));
-	if (self->len + other_len + 1 > internal->alloc_size)
-	{
-		internal = _realloc(internal, internal->alloc_size + other_len + 1);
-		if (!internal)
-			return (NULL);
-	}
-	_cat(self, other, other_len);
-	return (&internal->data);
+	_cat(self->str, other, tmp);
+	free(self->str);
+	self->str = tmp;
+	self->len = total - 1;
+	return (self);
 }
 
 #pragma endregion Functions

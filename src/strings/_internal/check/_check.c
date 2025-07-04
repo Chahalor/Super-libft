@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check.c                                            :+:      :+:    :+:   */
+/*   _check.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/06/27 14:02:46 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/02 14:04:08 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdint.h>
 
 /* -----| Internal |-----*/
-#include "/home/nduvoid/Desktop/Super-libft/src/strings/string.h"
+#include "string.h"
 #include "_check.h"
 #include "_string.h"
 
@@ -31,12 +31,15 @@ __attribute__((visibility("hidden"), used)) int	_sft_string_cmp(
 	const t_string *const other
 )
 {
-	const size_t	length_min = self->len * (other->len < self->len)
-		+ other->len * (self->len < other->len);
+	register size_t	i;
+	size_t			length_min;
 	uint64_t		self_chunk;
 	uint64_t		other_chunk;
-	register size_t	i;
 
+	if (!self || !other)
+		return (self != other);
+	length_min = self->len * (other->len < self->len) 
+		+ other->len * (self->len < other->len);
 	i = 0;
 	while (i + sizeof(uint64_t) <= length_min)
 	{
@@ -70,11 +73,14 @@ __attribute__((visibility("hidden"), used)) int	_sft_string_ncmp(
 	const size_t n
 )
 {
-	const size_t	length_min = _min_3(self->len, other->len, n);
+	register size_t	i;
+	size_t			length_min;
 	uint64_t		self_chunk;
 	uint64_t		other_chunk;
-	register size_t	i;
 
+	if (!self || !other)
+		return (self != other);
+	length_min = _min_3(self->len, other->len, n);
 	i = 0;
 	while (i + sizeof(uint64_t) <= length_min)
 	{
@@ -93,6 +99,7 @@ __attribute__((visibility("hidden"), used)) int	_sft_string_ncmp(
 	return (0);
 }
 
+#include <stdio.h> //rm
 /**
  * returns the index of the first occurrence of the target character in the string,
  */
@@ -105,17 +112,20 @@ __attribute__((visibility("hidden"), used)) size_t	_sft_string_char_find(
 	register size_t	j;
 
 	if (!self || !target)
-		return (-1);
+		return (0);
 	i = -1;
 	while (++i < self->len)
 	{
-		j = -1;
-		while (target[++j] && (self->str[i] == target[j]))
-			;
+		j = 0;
+		while (target[j] && (self->str[i + j] == target[j]))
+		{
+			fprintf(stderr, "Comparing %c with %c\n", self->str[i + j], target[j]); //rm
+			++j;
+		}
 		if (!target[j])
 			return (i);
 	}
-	return (-1);
+	return (0);
 }
 
 #pragma endregion Functions
