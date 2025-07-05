@@ -6,12 +6,12 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 10:25:23 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/04 11:57:10 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/05 10:31:54 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _MEMORY_H
-# define _MEMORY_H
+#ifndef _MEMORY__H
+# define _MEMORY__H
 
 # pragma once
 
@@ -32,4 +32,4 @@ typedef struct s_sft_mm_node
 	void					*data;
 }	t_sft_mm_node;
 
-#endif /* !_MEMORY_H */
+#endif /* !_MEMORY__H */

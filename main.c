@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 09:02:16 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/04 09:15:11 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/05 10:34:23 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	test_string(void)
 	str1->destroy(str1);
 }
 */
-
+/*
 #include "error/error.h"
 static void	test_error(void)
 {
@@ -55,9 +55,25 @@ static void	test_error(void)
 
 	printf("Error string: <%s>\n", sft_error_str(SFT_ERR_SUCCESS));
 }
+*/
+
+#include "_internal_/memory/_memory.h"
+static void	test_memory(void)
+{
+	void	*ptr1 = _alloc(50);
+	
+	register int i = -1;
+	while (++i < 50)
+		((char *)ptr1)[i] = i;
+	i = -1;
+	while (++i < 50)
+		printf("%d ", ((char *)ptr1)[i]);
+	printf("\n");
+}
+
 
 int main(void)
 {
-	test_error();
+	test_memory();
 	return (0);
 }
