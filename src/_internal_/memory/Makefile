@@ -1,4 +1,4 @@
-NAME := _error_.a
+NAME := _memory_.a
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror -g3
@@ -7,11 +7,11 @@ ARFLAGS := rcs
 
 RM := rm -f
 
-INCLUDES := -I./ -I_internal/
+INCLUDES := -I./ -I_internal/ -I../
 
 SRCS := \
-	_internal/_error_.c \
-	_error.c
+	_internal/_memory_.c \
+	_memory.c
 
 OBJS := $(SRCS:.c=.o)
 
