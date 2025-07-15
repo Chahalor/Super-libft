@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/04 11:44:29 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/15 09:12:50 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 #pragma endregion Header
 #pragma region    Functions
 
-__attribute__((visibility("hidden"), used)) void	_free(
+__attribute__((visibility("hidden"), used)) void	_mem_free(
 	void *const ptr
 )
 {
@@ -37,7 +37,7 @@ __attribute__((visibility("hidden"), used)) void	_free(
 	_sft_memory_manager(node, sft_mm_free);
 }
 
-__attribute__((visibility("hidden"), used)) void	*_alloc(
+__attribute__((visibility("hidden"), used)) void	*_mem_alloc(
 	const size_t size
 )
 {
@@ -55,7 +55,7 @@ __attribute__((visibility("hidden"), used)) void	*_alloc(
 	return (new_node->data);
 }
 
-__attribute__((visibility("hidden"), used)) void	*_realloc(
+__attribute__((visibility("hidden"), used)) void	*_mem_realloc(
 	void **ptr,
 	const size_t new_size
 )
@@ -65,19 +65,24 @@ __attribute__((visibility("hidden"), used)) void	*_realloc(
 	register size_t	i;
 	
 	if (!ptr || !*ptr)
-		return (_alloc(new_size));
+		return (_mem_alloc(new_size));
 	else if (new_size == 0)
-		return (_free(ptr), NULL);
+		return (_mem_free(ptr), NULL);
 	node = (t_sft_mm_node *)((char *)*ptr - sizeof(t_sft_mm_node));
-	new_data = _alloc(new_size);
+	new_data = _mem_alloc(new_size);
 	if (!new_data)
 		return (NULL);
 	i = -1;
 	while (++i < node->size && i < new_size)
 		((char *)new_data)[i] = ((char *)node->data)[i];
-	_free(*ptr);
+	_mem_free(*ptr);
 	*ptr = new_data;
 	return (new_data);
+}
+
+__attribute__((visibility("hidden"), used))	void	_mem_destroy(void)
+{
+	_sft_memory_manager(NULL, sft_mm_destroy);
 }
 
 #pragma endregion Functions

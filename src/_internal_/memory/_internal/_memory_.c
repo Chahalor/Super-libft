@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/04 11:57:23 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/15 09:41:01 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 /* -----| System   |-----*/
 #include <stdlib.h>
+#include <stdio.h> //rm
 
 /* -----| Internal |-----*/
 #include "_memory_.h"
@@ -23,6 +24,36 @@
 #include "error/_error.h"
 
 #pragma endregion Header
+#pragma region    Debug
+
+/*
+static inline void	_show_(
+	t_sft_mm_node *bucket[]
+)
+{
+	t_sft_mm_node	*current;
+	int				i;
+	int				depth;
+
+	for (i = 0; i < _SFT_MM_BUCKET_SIZE; ++i)
+	{
+		if (!bucket[i])
+			continue;
+		printf("Bucket[%-4d]:", i);
+		current = bucket[i];
+		depth = 0;
+		while (current)
+		{
+			printf(" -> [depth %-3d] data: %p, size: %-4zu", depth, current->data, current->size);
+			current = current->next;
+			depth++;
+		}
+		printf("\n");
+	}
+}
+
+*/
+#pragma endregion Debug
 #pragma region    Functions
 
 /**
@@ -37,18 +68,25 @@ static inline int	_hash_(
 
 static inline void	*_register_(
 	void *ptr,
-	t_sft_mm_node *const bucket[]
+	t_sft_mm_node *bucket[]
 )
 {
 	const int		hash = _hash_(ptr);
-	t_sft_mm_node	*current;
+	t_sft_mm_node	*current = bucket[hash];
 
-	current = bucket[hash];
-	while (current)
-		current = current->next;
-	current = (t_sft_mm_node *)ptr;
-	current->next = NULL;
-	return (current->data);
+	if (!current)
+	{
+		bucket[hash] = (t_sft_mm_node *)ptr;
+		((t_sft_mm_node *)ptr)->next = NULL;
+	}
+	else
+	{
+		while (current->next)
+			current = current->next;
+		current->next = (t_sft_mm_node *)ptr;
+		((t_sft_mm_node *)ptr)->next = NULL;
+	}
+	return (((t_sft_mm_node *)ptr)->data);
 }
 
 static inline void	_free_(
@@ -107,16 +145,13 @@ __attribute__((visibility("hidden"), used)) void	*_sft_memory_manager(
 {
 	static t_sft_mm_node	*bucket[_SFT_MM_BUCKET_SIZE] = {0};
 
-	if (!ptr)
-		return (NULL);
-	else if (access == sft_mm_register)
-		return (_register(ptr, bucket));
+	if (access == sft_mm_register)
+		return (_register_(ptr, bucket));
 	else if (access == sft_mm_free)
 		_free_(ptr, bucket);
 	else if (access == sft_mm_destroy)
 		_destroy_(bucket);
-	else
-		return (NULL);
+	return (NULL);
 }
 
 #pragma endregion Functions
