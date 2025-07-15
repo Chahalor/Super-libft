@@ -89,7 +89,7 @@ static inline void	*_register_(
 	return (((t_sft_mm_node *)ptr)->data);
 }
 
-static inline void	_free_(
+static inline void	_frpushee_(
 	void *ptr,
 	t_sft_mm_node *bucket[]
 )
