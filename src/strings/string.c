@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/04 10:21:12 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/15 13:43:29 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #include "error/_error.h"
 
 #pragma endregion Header
-#pragma region Functions
+#pragma region    Functions
 
 __attribute__((visibility("hidden"), used)) void	_destroyer(
 	t_string *self
@@ -85,6 +85,12 @@ static inline t_string	*_string_init(
 	};
 	new_string->memory = (t_string_memory){
 		.duplicate = _sft_string_dup
+	};
+	new_string->change = (t_string_change){
+		.atoi = _sft_string_atoi,
+		.atol = _sft_string_atol,
+		.atolf = _sft_string_atolf,
+		.itos = _sft_string_itos
 	};
 	new_string->destroy = _destroyer;
 	return (new_string);

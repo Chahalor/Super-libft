@@ -3,76 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   is.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nduvoid <nduvoid@42mulhouse.fr>            +#+  +:+       +#+        */
+/*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 15:05:51 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/01/29 13:06:47 by nduvoid          ###   ########.fr       */
+/*   Created: 2025/04/02 08:19:51 by nduvoid           #+#    #+#             */
+/*   Updated: 2025/04/02 08:36:24 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef IS_H
 # define IS_H
 
-# include "super_libft.h"
+# pragma once
 
-/**
- * @brief Check if a character is a space.
- * 
- * @param c Character to check.
- * 
- * @return int 1 if the character is a space, 0 otherwise.
- */
-__attribute__((always_inline)) static inline int	ft_isspace(int c)
-{
-	return (c == ' ' || (unsigned char)c - 9 < 5);
-}
+# pragma region "Includes"
+/* Systeme */
+	//...
 
-/**
- * @brief Check if a character is a lowercase letter.
- * 
- * @param c Character to check.
- * 
- * @return int 1 if the character is a lowercase letter, 0 otherwise.
- */
-__attribute__((always_inline)) static inline int	ft_islower(int c)
-{
-	return ((unsigned char)(c | 32) - 97 < 26);
-}
+/* Global */
+	//...
 
-/**
- * @brief Check if a character is an uppercase letter.
- * 
- * @param c Character to check.
- * 
- * @return int 1 if the character is an uppercase letter, 0 otherwise.
- */
-__attribute__((always_inline)) static inline int	ft_isupper(int c)
-{
-	return ((unsigned char)(c & 95) - 65 < 26);
-}
+/* Modules */
+	//...
 
-/**
- * @brief Check if a character is a letter.
- * 
- * @param c Character to check.
- * 
- * @return int 1 if the character is a letter, 0 otherwise.
- */
-__attribute__((always_inline)) static inline int	ft_isalpha(int c)
-{
-	return ((unsigned char)(c | 32) - 97 < 26);
-}
+# pragma endregion	/* Includes */
+# pragma region "Macros"
+//...
+# pragma endregion	/* Macros */
+# pragma region "Typedefs"
+//...
+# pragma endregion	/* Typedefs */
+# pragma region "Enums"
+//...
+# pragma endregion	/* Enums */
+# pragma region "Structs"
+//...
+# pragma endregion	/* Structs */
+# pragma region "Prototypes"
+/* Extern */
+	//...
 
-/**
- * @brief Check if a character is a digit.
- * 
- * @param c Character to check.
- * 
- * @return int 1 if the character is a digit, 0 otherwise.
- */
-__attribute__((always_inline)) static inline int	ft_isdigit(int c)
-{
-	return ((unsigned char)c - 48 < 10);
-}
+/* Global */
+	// is_char.c
 
-#endif	// IS_H
+int	ft_isdigit(const int c);
+int	ft_isalpha(const int c);
+int	ft_isalnum(const int c);
+int	ft_isascii(const int c);
+int	ft_isprint(const int c);
+
+	// is_str.c
+
+int	ft_isnumber(const char *str);
+
+/* Static */
+	//...
+
+# pragma endregion	/* Prototypes */
+
+#endif	/* IS_H */

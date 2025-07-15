@@ -6,14 +6,14 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 09:02:16 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/05 10:34:23 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/15 13:49:58 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 
-/*
+// /*
 #include "strings/string.h"
 static void	test_string(void)
 {
@@ -42,11 +42,19 @@ static void	test_string(void)
 	printf("Duplicated String: <%s> (%zu)\n", str3->str, str3->len);
 	printf("Comparing strings: %d\n", str1->check.cmp(str1, str3));
 
+	t_string	*str4 = new_t_string("12345");
+	printf("String to int: %d\n", str4->change.atoi(str4));
+	printf("String to long: %ld\n", str4->change.atol(str4));
+	printf("String to float: %f\n", str4->change.atolf(str4));
+	t_string	*str5 = str4->change.itos(12345);
+
+	str5->destroy(str5);
+	str4->destroy(str4);
 	str3->destroy(str3);
 	str2->destroy(str2);
 	str1->destroy(str1);
 }
-*/
+// */
 /*
 #include "error/error.h"
 static void	test_error(void)
@@ -57,6 +65,7 @@ static void	test_error(void)
 }
 */
 
+/*
 #include "_internal_/memory/_memory.h"
 static void	test_memory(void)
 {
@@ -70,10 +79,12 @@ static void	test_memory(void)
 		printf("%d ", ((char *)ptr1)[i]);
 	printf("\n");
 }
+*/
 
 
 int main(void)
 {
-	test_memory();
+	test_string();
+	// test_memory();
 	return (0);
 }
