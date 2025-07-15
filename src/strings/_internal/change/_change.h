@@ -1,59 +1,69 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   type.h                                             :+:      :+:    :+:   */
+/*   _change.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/17 12:09:38 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/04/17 12:16:00 by nduvoid          ###   ########.fr       */
+/*   Created: 2025/07/02 08:23:37 by nduvoid           #+#    #+#             */
+/*   Updated: 2025/07/15 13:43:06 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TYPE_H
-# define TYPE_H
+#ifndef _CHANGE_H
+# define _CHANGE_H
 
 # pragma once
 
 /* ************************************************************************** */
-/*                                 Defines                                    */
+/*                                 Headers                                    */
 /* ************************************************************************** */
 
-//...
+# include "_string.h"
+# include "../../string.h"
 
 /* ************************************************************************** */
 /*                                 Typedefs                                   */
 /* ************************************************************************** */
 
-# ifndef EASY_TYPE
-#  define EASY_TYPE
-
-typedef unsigned int	t_uint;		/* typedef to lower unisgned int call  */
-typedef unsigned char	t_uchar;	/* typedef to lower unisgned char call */
-
-# endif	/* EASY_TYPE */
+typedef struct s_string_change	t_string_change;
 
 /* ************************************************************************** */
 /*                                 Enums                                      */
 /* ************************************************************************** */
 
-# ifndef E_BOOL
-#  define E_BOOL
+//...
 
-typedef enum e_bool		t_bool;		/* boolean, false = 0 and true = 1     */
+/* ************************************************************************** */
+/*                                 Structs                                    */
+/* ************************************************************************** */
 
-enum e_bool
+struct s_string_change
 {
-	e_false = 0,	/* 0 what can i say more                      */
-	e_true = 1,		/* 1, do you need more infomation ? Realy ??? */
+	int			(*atoi)(const t_string *const);
+	long		(*atol)(const t_string *const);
+	float		(*atolf)(const t_string *const);
+	t_string	*(*itos)(size_t value);
 };
 
-# endif	/* E_BOOL */
-
 /* ************************************************************************** */
-/*                                 Typedefs                                   */
+/*                                 Prototypes                                 */
 /* ************************************************************************** */
 
-// ...
+int			_sft_string_atoi(
+				const t_string *const self
+				);
 
-#endif	/* TYPE_H */
+long		_sft_string_atol(
+				const t_string *const self
+				);
+
+float		_sft_string_atolf(
+				const t_string *const self
+				);
+
+t_string	*_sft_string_itos(
+				size_t value
+				);
+
+#endif /* !_CHANGE_H */

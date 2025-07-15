@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:11:14 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/02 09:03:21 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/15 13:42:45 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include "_append.h"
 # include "_check.h"
 # include "_memory.h"
+# include "_change.h"
 
 /* -----| Modules   |----- */
 	//...
@@ -58,6 +59,7 @@ struct s_string
 	t_string_append	append;
 	t_string_check	check;
 	t_string_memory	memory;
+	t_string_change	change;
 	void			(*destroy)(t_string *self);
 };
 

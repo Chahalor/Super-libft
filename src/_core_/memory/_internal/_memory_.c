@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/15 09:41:01 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/15 13:06:54 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static inline void	*_register_(
 	return (((t_sft_mm_node *)ptr)->data);
 }
 
-static inline void	_frpushee_(
+static inline void	_free_(
 	void *ptr,
 	t_sft_mm_node *bucket[]
 )
