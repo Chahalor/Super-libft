@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/16 16:48:25 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/16 18:40:19 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@
 __attribute__((used))
 t_file	*sft_open(
 	const char *const filename,
-	const int mode
+	const int mode,
+	const int permissions
 )
 {
 	const int			len = _strlen(filename) + 1;
@@ -51,7 +52,7 @@ t_file	*sft_open(
 	if (unlikely(!file))
 		return (_register_error(ENOMEM), NULL);
 	_file = (struct s_sft_file *)(file);
-	_file->fd = open(filename, mode);
+	_file->fd = open(filename, mode, permissions);
 	if (unlikely(_file->fd < 0))
 		return (_register_error(errno), free(_file), NULL);
 	_file->path = (char *)(_file + 1);
@@ -75,7 +76,7 @@ ssize_t	sft_read(
 	struct s_sft_file	*_file;
 	ssize_t				bytes_read;
 
-	if (unlikely(!file || !buffer || size < 0))
+	if (unlikely(!file || !buffer || !size))
 		return (_register_error(EINVAL), -1);
 	else if (unlikely(!size))
 		return (0);
@@ -101,7 +102,7 @@ ssize_t	sft_write(
 	struct s_sft_file	*_file;
 	ssize_t				bytes_written;
 
-	if (unlikely(!file || !buffer || size < 0))
+	if (unlikely(!file || !buffer || !size))
 		return (_register_error(EINVAL), -1);
 	else if (unlikely(!size))
 		return (0);
