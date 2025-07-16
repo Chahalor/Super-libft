@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:40:03 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/16 15:28:14 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/16 15:54:25 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 	//...
 
 /* -----| Modules   |----- */
+# include "io/io.h"
 # include "strings/string.h"
 
 /* ************************************************************************** */
@@ -81,7 +82,7 @@ struct s_sft_math
 
 struct s_sft_io
 {
-	t_file	*(*const open)(const char *filename, const char *mode);
+	t_file	*(*const open)(const char *const filename, const int mode);
 	int		(*const read)(t_file *file, void *buffer, size_t size);
 	int		(*const write)(t_file *file, void *buffer, size_t size);
 	int		(*const close)(t_file *file);

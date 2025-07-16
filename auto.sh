@@ -2,7 +2,7 @@
 
 # Configurations
 CC="cc"
-CFLAGS="-Wall -Wextra -Werror -MMD -Isrc/_core_"
+CFLAGS="-Wall -Wextra -Werror -MMD -Isrc/ -Isrc/_core_"
 AR="ar rcs"
 NAME="Super-Libft.a"
 

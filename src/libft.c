@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 11:54:52 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/16 15:38:00 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/16 16:50:31 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 /* -----| Module   |-----*/
 #include "strings/string.h"
+#include "io/io.h"
 #include "libft.h"
 
 t_libft	*libft(void)
@@ -49,10 +50,10 @@ t_libft	*libft(void)
 			}
 		},
 		.io = {
-			.open = NULL,		// Placeholder for file open function
-			.read = NULL,		// Placeholder for file read function
-			.write = NULL,		// Placeholder for file write function
-			.close = NULL,		// Placeholder for file close function
+			.open = sft_open,
+			.read = sft_read,
+			.write = sft_write,
+			.close = sft_close,
 			.defaults = {
 				.stdin = NULL,	// Placeholder for stdin
 				.stdout = NULL,	// Placeholder for stdout
