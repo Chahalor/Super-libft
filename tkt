@@ -1,0 +1,77 @@
+# Makefile (à la racine)
+
+NAME	:= libft.a
+AR		:= ar rcs
+CC		:= gcc
+CFLAGS	:= -Wall -Wextra -Werror
+BUILD	:= build
+OBJDIR	:= $(BUILD)/obj
+
+# Modules définis par défaut
+CORE_MODULES := _core_
+
+# Modules passés via make
+MODULES ?=
+
+# Ajoute _core_ automatiquement
+ALL_MODULES := $(CORE_MODULES) $(MODULES)
+
+# Inclusions automatiques de tous les makefile.mk
+MKFILES := $(foreach mod,$(ALL_MODULES),src/$(mod)/makefile.mk)
+include $(wildcard $(MKFILES))
+
+# Liste finale des objets à compiler
+OBJECTS := $(foreach mod,$(ALL_MODULES),$($(mod)_OBJS))
+
+# Règles
+.PHONY: all clean fclean re
+
+all: $(NAME)
+
+$(NAME): $(OBJECTS)
+	@mkdir -p $(dir $(NAME))
+	$(AR) $(NAME) $(OBJECTS)
+
+clean:
+	rm -rf $(BUILD)
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
+
+
+# ex pour string
+# src/strings/makefile.mk
+
+strings_SRCS := src/strings/string.c \
+				src/strings/_internal/memory/_memory.c \
+				src/strings/_internal/append/_append.c \
+				src/strings/_internal/change/_change.c \
+				src/strings/_internal/check/_check.c
+
+strings_OBJS := $(strings_SRCS:%.c=$(OBJDIR)/%.o)
+
+$(OBJDIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -I src/strings -c $< -o $@
+
+# et pour core
+# src/_core_/makefile.mk
+
+_core__SRCS := src/_core_/memory/_memory.c \
+			   src/_core_/memory/_internal/_memory_.c \
+			   src/_core_/error/_error.c \
+			   src/_core_/error/_internal/_error_.c
+
+_core__OBJS := $(_core__SRCS:%.c=$(OBJDIR)/%.o)
+
+$(OBJDIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -I src/_core_ -c $< -o $@
+
+#usage 
+make                      # compile libft.a avec _core_
+make string               # compile libft.a avec _core_ + strings
+make string array io      # compile libft.a avec _core_ + les 3 modules
+make fclean               # nettoie tout
