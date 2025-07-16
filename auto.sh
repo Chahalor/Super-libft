@@ -131,8 +131,8 @@ all: \$(NAME)
 clean:
 	rm -f \$(OBJECTS)
 
-fclean: clean
-	rm -f \$(NAME)
+fclean:
+	rm -rf \$(BUILD) \$(NAME)
 
 re: fclean all
 EOF
