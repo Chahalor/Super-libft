@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/15 09:12:50 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/16 09:43:48 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 
 /* -----| Internal |-----*/
-#include "_memory_.h"
+#include "_internal/_memory_.h"
 #include "_memory.h"
 
 /* -----| _Internal_   |-----*/

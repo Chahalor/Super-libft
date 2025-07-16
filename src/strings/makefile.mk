@@ -1,16 +1,16 @@
-_DIR_MODULE_STRINGS		:= strings
-_DIR_INTERFACE_STRINGS	:= $(_DIR_MODULE_STRINGS)
-_DIR_INTERNAL_STRINGS	:= $(_DIR_MODULE_STRINGS)/_internal
+strings_INCLUDES := -I./src/strings -I./src/strings/_internal -I./src/strings/_internal/append -I./src/strings/_internal/check -I./src/strings/_internal/memory -I./src/strings/_internal/change 
+strings_SRCS := \
+    ./src/strings/_internal/append/_append.c \
+    ./src/strings/_internal/check/_check.c \
+    ./src/strings/_internal/memory/_memory.c \
+    ./src/strings/_internal/change/_change.c \
+    ./src/strings/string.c \
 
-_SRC_INTERFACE_STRINGS	:= string.c 
-_SRC_INTERNAL_STRINGS	:= append/_append.c check/_check.c memory/_memory.c change/_change.c 
+strings_OBJS := $(strings_SRCS:%.c=.build/obj/%.o)
+strings_INCLUDES := -I./src/strings -I./src/strings/_internal -I./src/strings/_internal/append -I./src/strings/_internal/check -I./src/strings/_internal/memory -I./src/strings/_internal/change 
 
-_OBJ_STRINGS			:= $(addprefix $(DIR_OBJ)/$(_DIR_INTERFACE_STRINGS)/, $(_SRC_INTERFACE_STRINGS:.c=.o))
-_OBJ_STRINGS			+= $(addprefix $(DIR_OBJ)/$(_DIR_INTERNAL_STRINGS)/, $(_SRC_INTERNAL_STRINGS:.c=.o))
-_OBJ_ALL						+= $(_OBJ_STRINGS)
+$(strings_OBJS): CFLAGS += $(strings_INCLUDES)
 
-$(DIR_OBJ)/$(_DIR_MODULE_STRINGS)/%.o: $(DIR_SRC)/$(_DIR_MODULE_STRINGS)/%.c
+$(strings_OBJS):
 	@mkdir -p $(dir $@)
-	@printf "\r ⚙️ $(_YELLOW) Compiling$(_RESET) %-60s" "$<"
-	@$(CC) $(CFLAGS) $(DEBUGFLAGS) $(INCLUDE_ALL) -I$(DIR_SRC)/$(_DIR_MODULE_STRINGS)/_internal -c $< -o $@
-
+	$(CC) $(CFLAGS) -c $(patsubst $(OBJDIR)/%.o,%.c,$@) -o $@
