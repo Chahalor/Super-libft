@@ -6,14 +6,14 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 09:02:16 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/15 13:49:58 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/16 18:42:43 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 
-// /*
+/*
 #include "strings/string.h"
 static void	test_string(void)
 {
@@ -54,7 +54,7 @@ static void	test_string(void)
 	str2->destroy(str2);
 	str1->destroy(str1);
 }
-// */
+*/
 /*
 #include "error/error.h"
 static void	test_error(void)
@@ -81,10 +81,35 @@ static void	test_memory(void)
 }
 */
 
+#include "io/io.h"
+#include <fcntl.h>
+#include <string.h>
+void	test_io(void)
+{
+	t_file	*file = sft_open("test.txt", O_RDWR | O_CREAT | O_TRUNC, 0644);
+
+	if (!file)
+	{
+		perror("Failed to open file");
+		return ;
+	}
+
+	const char *data = "Hello, Super-libft!";
+	if (file->write(file, data, strlen(data)) < 0)
+	{
+		perror("Failed to write to file");
+		file->close(file);
+		return ;
+	}
+
+	file->close(file);
+	printf("File operations completed successfully.\n");
+}
 
 int main(void)
 {
-	test_string();
+	// test_string();
 	// test_memory();
+	test_io();
 	return (0);
 }

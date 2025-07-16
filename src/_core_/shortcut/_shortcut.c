@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/16 16:43:44 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/16 18:37:07 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ inline void	_cpy(
 {
 	size_t	i;
 
-	if (unlikely(!dest || !src || n < 0))
+	if (unlikely(!dest || !src || !n))
 		return ;
 	i = -1;
 	while (++i < n && src[i])

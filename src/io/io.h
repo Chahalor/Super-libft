@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:11:14 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/16 16:47:12 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/16 18:40:33 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ struct s_file
 
 t_file	*sft_open(
 			const char *const filename,
-			const int mode
+			const int mode,
+			const int permissions
 			);
 
 ssize_t	sft_read(

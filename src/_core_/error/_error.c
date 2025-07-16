@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 08:14:22 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/16 09:43:15 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/16 18:36:35 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ __attribute__((used))	char	*sft_error_str(
 	return ((char *)_error_manager(error, err_str));
 }
 
-__attribute__((used, const))	void	sft_perror(
+__attribute__((used))	void	sft_perror(
 	const char *const restrict message
 )
 {
