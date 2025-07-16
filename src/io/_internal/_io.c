@@ -1,38 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _init.c                                            :+:      :+:    :+:   */
+/*   _io.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 08:14:22 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/16 16:38:09 by nduvoid          ###   ########.fr       */
+/*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
+/*   Updated: 2025/07/16 16:04:00 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma region    Header
+#pragma region Header
 
-/* -----| System   |-----*/
-	//...
-
-/* -----| Global   |-----*/
-#include "libft.h"
+/* -----|  System  |-----*/
+#include <stdlib.h>
 
 /* -----| Internal |-----*/
-	//...
+#include "_internal/_io.h"
+#include "io.h"
 
-/* -----| Module   |-----*/
+/* -----|   Core   |-----*/
+#include "error/_error.h"
+
+/* -----|  Module  |-----*/
 	//...
 
 #pragma endregion Header
 #pragma region    Functions
 
-__attribute__((visibility("hidden"), unused))	int	_init_libft(
-	t_libft *const libft
-)
-{
-	(void)libft;
-	return (-1);
-}
+
 
 #pragma endregion Functions
