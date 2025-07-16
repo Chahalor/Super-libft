@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:11:14 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/15 13:42:45 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/16 13:53:23 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@
 	//...
 
 /* -----| Internals |----- */
-# include "_string.h"
-# include "_append.h"
-# include "_check.h"
-# include "_memory.h"
-# include "_change.h"
+# include "_internal/_string.h"
+# include "_internal/append/_append.h"
+# include "_internal/check/_check.h"
+# include "_internal/memory/_memory.h"
+# include "_internal/change/_change.h"
 
 /* -----| Modules   |----- */
 	//...
@@ -40,7 +40,12 @@
 /*                                 Typedefs                                   */
 /* ************************************************************************** */
 
-typedef struct s_string			t_string;			/* String structure type definition */
+typedef struct s_string_append	t_string_append;
+typedef struct s_string_check	t_string_check;
+typedef struct s_string_memory	t_string_memory;
+typedef struct s_string_change	t_string_change;
+
+typedef struct s_string	t_string;	/* String structure type definition */
 
 /* ************************************************************************** */
 /*                                 Enums                                      */
