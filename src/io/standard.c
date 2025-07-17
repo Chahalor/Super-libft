@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   standar.c                                          :+:      :+:    :+:   */
+/*   standard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/17 13:52:20 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/17 15:31:32 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ static t_file	*_get_std(
 )
 {
 	static t_file	std_files[3] = {
-		{.data = {0}, .read = sft_read, .write = sft_write, .close = sft_close},
-		{.data = {0}, .read = sft_read, .write = sft_write, .close = sft_close},
-		{.data = {0}, .read = sft_read, .write = sft_write, .close = sft_close}
+		{.data = {0}, .read = sft_read, .print = sft_printf, .close = sft_close},
+		{.data = {0}, .read = sft_read, .print = sft_printf, .close = sft_close},
+		{.data = {0}, .read = sft_read, .print = sft_printf, .close = sft_close}
 	};
 
 	((struct s_sft_file *)(std_files[stdnb].data))->std = 1;
