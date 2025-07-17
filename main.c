@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 09:02:16 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/16 18:42:43 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/17 13:55:18 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static void	test_error(void)
 	printf("Error string: <%s>\n", sft_error_str(SFT_ERR_SUCCESS));
 }
 */
-
 /*
 #include "_internal_/memory/_memory.h"
 static void	test_memory(void)
@@ -104,6 +103,9 @@ void	test_io(void)
 
 	file->close(file);
 	printf("File operations completed successfully.\n");
+	sftout()->write(sftout(), "This is a test output to standard output.\n", 42);
+	// sftin()->write(sftin(), "This is a test input to standard input.\n", 42);
+	sfterr()->write(sfterr(), "This is a test error output.\n", 30);
 }
 
 int main(void)

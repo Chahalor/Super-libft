@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   io.h                                               :+:      :+:    :+:   */
+/*   _scan.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:11:14 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/17 14:10:42 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/17 15:19:50 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef IO_H
-# define IO_H
-# define SFT_IO_H
+#ifndef _SCAN_H
+# define _SCAN_H
 
 # pragma once
 
@@ -21,23 +20,36 @@
 /* ************************************************************************** */
 
 /* -----| Systems   |----- */
-# include <stddef.h>
-#include <sys/types.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdarg.h>
 
 /* -----| Globals   |----- */
 	//...
 
 /* -----| Internals |----- */
-# include "_internal/_io.h"
+# include "../_io.h"
+# include "io.h"
 
 /* -----| Modules   |----- */
 	//...
 
 /* ************************************************************************** */
+/*                                 Macros                                     */
+/* ************************************************************************** */
+
+# define NB_CHAR_INT	10	/* Max number of char inside an interger */
+# define NB_CHAR_LONG	20
+# define NB_CHAR_FLOAT	32
+# define NB_CHAR_DOUBLE	64
+
+/* ************************************************************************** */
 /*                                 Typedefs                                   */
 /* ************************************************************************** */
 
-typedef struct s_file	t_file;	/* File structure type definition */
+typedef struct s_sft_scan	t_sft_scan;	/* Scan structure type definition */
 
 /* ************************************************************************** */
 /*                                 Enums                                      */
@@ -49,43 +61,19 @@ typedef struct s_file	t_file;	/* File structure type definition */
 /*                                 Structs                                    */
 /* ************************************************************************** */
 
-struct s_file
+struct s_sft_scan
 {
-	char		data[sizeof(struct s_sft_file)];
-	ssize_t		(*read)(t_file *const file, void *buffer, size_t size);
-	size_t		(*scan)(t_file *const file, const char *const restrict format, ...);
-	ssize_t		(*print)(t_file *const file, const char *const restrict format, ...);
-	int			(*close)(t_file *const file);
+	va_list			args;			/* Arguments list for the scan */
+	char			*format;		/* Format string for the scan */
+	int				nb_read;		/* Number of characters read */
+	t_file			*file;			/* fd for the scan          */
+	unsigned char	error	: 1;	/* Error flag              */
 };
 
 /* ************************************************************************** */
 /*                                 Prototypes                                 */
 /* ************************************************************************** */
 
-t_file	*sft_open(
-			const char *const filename,
-			const int mode,
-			const int permissions
-			);
+//...
 
-ssize_t	sft_read(
-			t_file *const file,
-			void *buffer,
-			size_t size
-			);
-
-ssize_t	sft_write(
-			t_file *const file,
-			const void *const buffer,
-			size_t size
-			);
-
-int	sft_close(
-			t_file *const file
-			);
-
-t_file	*sftout(void);
-t_file	*sftin(void);
-t_file	*sfterr(void);
-
-#endif /* !IO_H */
+#endif /* !_SCAN_H */
