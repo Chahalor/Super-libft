@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/16 18:40:19 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/17 08:37:34 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,30 +39,15 @@ t_file	*sft_open(
 	const int permissions
 )
 {
-	const int			len = _strlen(filename) + 1;
+	int					fd;
 	t_file				*file;
-	struct s_sft_file	*_file;
 
 	if (unlikely(!filename || !*filename))
 		return (_register_error(EINVAL), NULL);
-	file = malloc(sizeof(0
-		+ sizeof(struct s_sft_file)
-		+ sizeof(t_file)
-		+ sizeof(char) * (len + 1)));
-	if (unlikely(!file))
-		return (_register_error(ENOMEM), NULL);
-	_file = (struct s_sft_file *)(file);
-	_file->fd = open(filename, mode, permissions);
-	if (unlikely(_file->fd < 0))
-		return (_register_error(errno), free(_file), NULL);
-	_file->path = (char *)(_file + 1);
-	_cpy(_file->path, filename, len, 1);
-	_file->advance = 0;
-	_file->eof = 0;
-	_file->closed = 0;
-	file->read = sft_read;
-	file->write = sft_write;
-	file->close = sft_close;
+	fd = open(filename, mode, permissions);
+	if (unlikely(fd < 0))
+		return (_register_error(errno), NULL);
+	file = _sft_io_open(fd, filename);
 	return (file);
 }
 

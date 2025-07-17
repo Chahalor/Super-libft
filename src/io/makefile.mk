@@ -1,7 +1,8 @@
 io_INCLUDES := -I./src/io -I./src/io/_internal 
 io_SRCS := \
-    ./src/io/io.c \
     ./src/io/_internal/_io.c \
+    ./src/io/io.c \
+    ./src/io/standard.c \
 
 io_OBJS := $(io_SRCS:%.c=.build/obj/%.o)
 io_INCLUDES := -I./src/io -I./src/io/_internal 

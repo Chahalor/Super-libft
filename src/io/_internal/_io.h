@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:11:14 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/16 16:22:29 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/17 13:54:36 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,16 @@ struct s_sft_file
 	size_t			advance;		/* how much we have advanced in the file */
 	unsigned char	eof		: 1;	/* End of file reached                  */
 	unsigned char	closed	: 1;	/* File is closed                      */
+	unsigned char	std		: 1;	/* Is a standard file                 */
 };
 
 /* ************************************************************************** */
 /*                                 Prototypes                                 */
 /* ************************************************************************** */
 
-//...
+t_file	*_sft_io_open(
+			const int fd,
+			const char *const filename
+			);
 
 #endif /* !_IO_H */

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _io.c                                              :+:      :+:    :+:   */
+/*   standar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/17 08:37:43 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/17 13:52:20 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,37 @@
 #pragma endregion Header
 #pragma region    Functions
 
-t_file	*_sft_io_open(
-	const int fd,
-	const char *const filename
+__attribute__((used, pure))
+static t_file	*_get_std(
+	const int stdnb
 )
 {
-	const int			len = _strlen(filename) + 1;
-	t_file				*file;
-	struct s_sft_file	*_file;
+	static t_file	std_files[3] = {
+		{.data = {0}, .read = sft_read, .write = sft_write, .close = sft_close},
+		{.data = {0}, .read = sft_read, .write = sft_write, .close = sft_close},
+		{.data = {0}, .read = sft_read, .write = sft_write, .close = sft_close}
+	};
 
-	file = (t_file *)malloc(0
-		+ sizeof(struct s_sft_file)
-		+ sizeof(t_file)
-		+ sizeof(char) * (len + 1));
-	if (unlikely(!file))
-		return (_register_error(ENOMEM), NULL);
-	_file = (struct s_sft_file *)(file);
-	_file->fd = fd;
-	_file->path = (char *)(_file + 1);
-	_cpy(_file->path, filename, len, 1);
-	_file->advance = 0;
-	_file->eof = 0;
-	_file->closed = 0;
-	_file->std = !filename;
-	file->read = sft_read;
-	file->write = sft_write;
-	file->close = sft_close;
-	return (file);
+	((struct s_sft_file *)(std_files[stdnb].data))->std = 1;
+	return (&std_files[stdnb]);
+}
+
+__attribute__((used))
+t_file	*sftout(void)
+{
+	return (_get_std(0));
+}
+
+__attribute__((used))
+t_file	*sftin(void)
+{
+	return (_get_std(1));
+}
+
+__attribute__((used))
+t_file	*sfterr(void)
+{
+	return (_get_std(2));
 }
 
 #pragma endregion Functions
