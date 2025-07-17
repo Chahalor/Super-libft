@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 09:02:16 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/17 13:55:18 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/17 15:33:32 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,18 +94,17 @@ void	test_io(void)
 	}
 
 	const char *data = "Hello, Super-libft!";
-	if (file->write(file, data, strlen(data)) < 0)
-	{
-		perror("Failed to write to file");
-		file->close(file);
-		return ;
-	}
-
+	// if (file->print(file, "%s\n", data) < 0)
+	// {
+	// 	perror("Failed to write to file");
+	// 	file->close(file);
+	// 	return ;
+	// }
+	sftout()->print(sftout(), "Data written to file: %s\n", data);
+	int	tkt = 0;
+	sftin()->scan(sftin(), "%d", &tkt);
+	sftout()->print(sftout(), "Scanned value: %d\n", tkt);
 	file->close(file);
-	printf("File operations completed successfully.\n");
-	sftout()->write(sftout(), "This is a test output to standard output.\n", 42);
-	// sftin()->write(sftin(), "This is a test input to standard input.\n", 42);
-	sfterr()->write(sfterr(), "This is a test error output.\n", 30);
 }
 
 int main(void)

@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/17 15:20:20 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/17 15:31:13 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static inline int	_is_whitespace(
 
 __attribute__((visibility("hidden"), used))
 int	_read_number(
-	t_file *const file,
 	t_sft_scan *const scan,
 	const char format
 )
@@ -47,10 +46,11 @@ int	_read_number(
 	char		nergative;
 	char		c;
 
+	(void)format;
 	if (unlikely(!nbr))
 		return (_register_error(EINVAL), scan->error = 1, -1);
 	nergative = 1;
-	while (read(scan->fd, &c, 1) > 0 && ((c >= '0' && c <= '9')))
+	while (scan->file->read(scan->file, &c, 1) > 0 && _is_whitespace(c))
 		*nbr = *nbr * 10 + (c - '0');
 	*nbr *= nergative;
 	return (1);
@@ -58,7 +58,6 @@ int	_read_number(
 
 __attribute__((visibility("hidden"), used))
 int	_read_hex(
-	t_file *const file,
 	t_sft_scan *const scan,
 	const char format
 )
@@ -67,10 +66,11 @@ int	_read_hex(
 	char		c;
 	int			value;
 
+	(void)format;
 	if (unlikely(!nbr))
 		return (_register_error(EINVAL), scan->error = 1, -1);
 	*nbr = 0;
-	while (read(scan->fd, &c, 1) > 0)
+	while (scan->file->read(scan->file, &c, 1) > 0 && !_is_whitespace(c))
 	{
 		value = (c & 0xF) + 9 * ((('9' - c) >> 7) & 1) + 10 * (((((c | 0x20) - 'a') >> 7) ^ 1) & 1);
 		if (!(
@@ -87,7 +87,6 @@ int	_read_hex(
 
 __attribute__((visibility("hidden"), used))
 int	_read_string(
-	t_file *const file,
 	t_sft_scan *const scan,
 	const char format
 )
@@ -96,22 +95,21 @@ int	_read_string(
 	char	c;
 	int		i;
 
+	(void)format;
 	if (unlikely(!str))
 		return (_register_error(EINVAL), scan->error = 1, -1);
 	i = 0;
-	while (read(scan->fd, &c, 1) > 0 && !_is_whitespace(c) && i < 255)
+	while (scan->file->read(scan->file, &c, 1) > 0 && !_is_whitespace(c))
 		str[i++] = c;
 	return (1);
 }
 
 __attribute__((visibility("hidden"), used))
 int	_skip(
-	t_file *const file,
 	t_sft_scan *const scan,
 	const char format
 )
 {
-	(void)file;
 	(void)scan;
 	(void)format;
 	return (1);
@@ -119,10 +117,10 @@ int	_skip(
 
 static inline char	_get_flag(
 	t_sft_scan *const scan,
-	const char flag
+	const int flag
 )
 {
-	static int (*const funcs[])(t_file *const, t_sft_scan *const, const char) = {
+	static int (*const funcs[])(t_sft_scan *const, const char) = {
 		['d'] = _read_number,
 		['i'] = _read_number,
 		['u'] = _skip,
@@ -135,11 +133,10 @@ static inline char	_get_flag(
 		['%'] = _skip,
 	};
 
-	return (funcs[flag](, scan, flag));
+	return (funcs[flag](scan, flag));
 }
 
 static inline void	_scaning(
-	t_file *const file,
 	t_sft_scan *const scan
 )
 {
@@ -152,7 +149,7 @@ static inline void	_scaning(
 		c = scan->format[i];
 		if (c == '%')
 		{
-			
+			i += _get_flag(scan, scan->format[i + 1]);
 		}
 		else
 			++scan->error;
@@ -176,7 +173,7 @@ int	sft_scan(
 	scan.format = (char *)format;
 	scan.nb_read = 0;
 	scan.error = 0;
-	_scaning(file, &scan);
+	_scaning(&scan);
 	return (scan.nb_read);
 }
 

@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/17 08:37:43 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/17 15:27:49 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 /* -----| Internal |-----*/
 #include "_internal/_io.h"
+
 #include "io.h"
 
 /* -----|   Core   |-----*/
@@ -56,7 +57,7 @@ t_file	*_sft_io_open(
 	_file->closed = 0;
 	_file->std = !filename;
 	file->read = sft_read;
-	file->write = sft_write;
+	file->print = sft_printf;
 	file->close = sft_close;
 	return (file);
 }

@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:37:23 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/06/02 11:57:25 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/17 15:26:54 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 	//...
 
 /* -----| Internals |----- */
-	//# include "_ft_printf.h"
+# include "_internal/_ft_printf.h"
 
 /* -----| Modules  |----- */
-	//...
+# include "io.h"
 
 /* ************************************************************************** */
 /*                                 Prototypes                                 */
@@ -40,15 +40,9 @@
 int		ft_printf(
 			const char *const restrict str, ...);
 
-int		raw_printf(
-			const char *const restrict str, ...);
-
-int		ft_fprintf( const int fd, const char *const restrict str, ...);
-
-int		ft_sprintf(char *const restrict buffer, const char *const restrict str,
+int		sft_printf(
+			t_file *const file,
+			const char *const restrict format,
 			...);
-
-void	ft_perror(
-			const char *const restrict str, ...);
 
 #endif
