@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 09:02:16 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/18 08:32:49 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/18 09:25:45 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	test_memory(void)
 	printf("\n");
 }
 */
-
+/*
 #include "io/io.h"
 #include <fcntl.h>
 #include <string.h>
@@ -107,12 +107,23 @@ void	test_io(void)
 	sftout()->print(sftout(), "Scanned value: %d\n", tkt);
 	sftout()->print(sftout(), "Scanned string: <%s>\n", buffer);
 	file->close(file);
+}*/
+
+#include "math/math.h"
+void	test_math(void)
+{
+	printf("Square root of 16: %zu\n", sft_math_sqrt(16));
+	printf("Power of 2^3: %f\n", sft_math_pow(2, 3));
+	printf("Absolute value of -42: %f\n", sft_math_abs(-42));
+	printf("Max of 5 and 10: %f\n", sft_math_max(5, 10));
+	printf("Min of 5 and 10: %f\n", sft_math_min(5, 10));
 }
 
 int main(void)
 {
 	// test_string();
 	// test_memory();
-	test_io();
+	// test_io();
+	test_math();
 	return (0);
 }

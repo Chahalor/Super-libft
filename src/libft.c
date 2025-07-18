@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 11:54:52 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/16 16:50:31 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/18 09:24:32 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ t_libft	*libft(void)
 			.max = NULL,		// Placeholder for max function
 			.min = NULL,		// Placeholder for min function
 			.constants = {
-				.pi = 3.141592653589793,
-				.e = 2.718281828459045,
-				.two_pi = 6.283185307179586,
-				.half_pi = 1.570796326794897,
+				.pi = 3.14,
+				.e = 2.71,
+				.two_pi = 6.28,
+				.half_pi = 1.57,
 			}
 		},
 		.io = {
@@ -55,9 +55,9 @@ t_libft	*libft(void)
 			.write = sft_write,
 			.close = sft_close,
 			.defaults = {
-				.stdin = NULL,	// Placeholder for stdin
-				.stdout = NULL,	// Placeholder for stdout
-				.stderr = NULL,	// Placeholder for stderr
+				.stdin = sftin,
+				.stdout = sftout,
+				.stderr = sfterr,
 			}
 		},
 		.error = {

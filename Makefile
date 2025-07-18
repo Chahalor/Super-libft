@@ -13,7 +13,7 @@ MKFILES := $(wildcard src/_core_/makefile.mk) $(foreach mod,$(MODULES),src/$(mod
 # MKFILES			:= $(foreach mod,$(ALL_MODULES),src/$(mod)/makefile.mk)
 include			$(wildcard $(MKFILES))
 
-OBJECTS			:=  $(_core__OBJS) $(io_OBJS) $(strings_OBJS)
+OBJECTS			:=  $(_core__OBJS) $(io_OBJS) $(math_OBJS) $(strings_OBJS)
 
 .PHONY: all clean fclean re
 

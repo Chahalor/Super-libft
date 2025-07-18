@@ -5,9 +5,9 @@ io_SRCS := \
     ./src/io/_internal/print/_internal/writer.c \
     ./src/io/_internal/print/ft_printf.c \
     ./src/io/_internal/print/interface.c \
-    ./src/io/_internal/scan/scan.c \
     ./src/io/_internal/scan/_internal/numbers.c \
     ./src/io/_internal/scan/_internal/strings.c \
+    ./src/io/_internal/scan/scan.c \
     ./src/io/io.c \
     ./src/io/standard.c \
 
