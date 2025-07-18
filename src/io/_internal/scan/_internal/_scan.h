@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:11:14 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/17 15:19:50 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/18 08:59:50 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,14 @@ struct s_sft_scan
 /*                                 Prototypes                                 */
 /* ************************************************************************** */
 
-//...
+int	_read_numbers(
+		t_sft_scan *const scan,
+		const char format
+		);
+
+int	_read_chars(
+		t_sft_scan *const scan,
+		const char format
+		);
 
 #endif /* !_SCAN_H */

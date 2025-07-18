@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:11:14 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/17 15:27:34 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/18 08:20:19 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,11 @@ t_file	*_sft_io_open(
 			);
 
 int		sft_printf(
+			t_file *const file,
+			const char *const restrict format,
+			...);
+
+int		sft_scan(
 			t_file *const file,
 			const char *const restrict format,
 			...);

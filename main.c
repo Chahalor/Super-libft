@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 09:02:16 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/17 15:33:32 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/18 08:32:49 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,10 @@ void	test_io(void)
 	// }
 	sftout()->print(sftout(), "Data written to file: %s\n", data);
 	int	tkt = 0;
-	sftin()->scan(sftin(), "%d", &tkt);
+	char buffer[100];
+	sftin()->scan(sftin(), "%x", &tkt, buffer);
 	sftout()->print(sftout(), "Scanned value: %d\n", tkt);
+	sftout()->print(sftout(), "Scanned string: <%s>\n", buffer);
 	file->close(file);
 }
 

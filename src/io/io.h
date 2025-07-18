@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:11:14 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/17 15:28:16 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/18 08:20:44 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ struct s_file
 {
 	char		data[sizeof(struct s_sft_file)];
 	ssize_t		(*read)(t_file *const file, void *buffer, size_t size);
-	size_t		(*scan)(t_file *const file, const char *const restrict format, ...);
+	int			(*scan)(t_file *const file, const char *const restrict format, ...);
 	int			(*print)(t_file *const file, const char *const restrict format, ...);
 	int			(*close)(t_file *const file);
 };
