@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 11:54:52 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/18 09:24:32 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/18 09:31:38 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 	//...
 
 /* -----| Module   |-----*/
-#include "strings/string.h"
 #include "io/io.h"
+#include "math/math.h"
+#include "strings/string.h"
 #include "libft.h"
 
 t_libft	*libft(void)
@@ -37,11 +38,11 @@ t_libft	*libft(void)
 			.is_ascii = NULL,	// Placeholder for ASCII check function
 		},
 		.math = {
-			.sqrt = NULL,		// Placeholder for square root function
-			.pow = NULL,		// Placeholder for power function
-			.abs = NULL,		// Placeholder for absolute value function
-			.max = NULL,		// Placeholder for max function
-			.min = NULL,		// Placeholder for min function
+			.sqrt = sft_math_sqrt,
+			.pow = sft_math_pow,
+			.abs = sft_math_abs,
+			.max = sft_math_max,
+			.min = sft_math_min,
 			.constants = {
 				.pi = 3.14,
 				.e = 2.71,
