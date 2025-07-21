@@ -1,7 +1,7 @@
 NAME			:= Super-Libft.a
 AR				:= ar rcs
 CC				:= cc
-CFLAGS			:= -Wall -Wextra -Werror -MMD -g3 -Isrc/ -Isrc/_core_
+CFLAGS			:= -Wall -Wextra -Werror -MMD -Isrc/ -Isrc/_core_
 BUILD			:= .build
 OBJDIR			:= .build/obj
 

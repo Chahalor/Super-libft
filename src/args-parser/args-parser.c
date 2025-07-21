@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/21 10:31:50 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/21 11:29:24 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 /* -----|  System  |-----*/
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
-# include <ctype.h> // rm
+# include <string.h> //rm
 
 /* -----| Internal |-----*/
 #include "_internal/_args-parser.h"
@@ -33,63 +32,6 @@
 	//...
 
 #pragma endregion Header
-#pragma region    Statics
-
-static inline int	_word_size(
-	const char *str
-)
-{
-	int	size;
-
-	if (unlikely(!str))
-		return (0);
-	while (*str && isspace(*str))
-		++str;
-	size = 0;
-	while (str[size] && !isspace(str[size]))
-		++size;
-	return (size);
-}
-
-static inline int	_count_digits(
-	char *n
-)
-{
-	int	count;
-
-	if (!n)
-		return (0);
-	count = 0;
-	while (*n)
-	{
-		if (isdigit(*n))
-			++count;
-		++n;
-	}
-	return (count);
-}
-
-static inline char	*_worddup(
-	const char *s
-)
-{
-	char	*dup;
-	size_t	len;
-
-	if (!s)
-		return (NULL);
-	while (*s && isspace(*s))
-		++s;
-	len = _word_size(s);
-	dup = (char *)_mem_alloc((len + 1) * sizeof(char));
-	if (!dup)
-		return (NULL);
-	strncpy(dup, s, len);
-	dup[len] = '\0';
-	return (dup);
-}
-
-#pragma endregion Statics
 #pragma region    Functions
 
 static inline int	_set_value(
@@ -125,16 +67,28 @@ static inline int	handle_long_option(
 	t_args_data *args_data
 )
 {
+	t_args_spec		*builtins;
 	register int	i;
 	register int	j;
-
+	
+	builtins = _get_builtin_args();
 	i = -1;
+	while (builtins[++i].name)
+	{
+		j = _strlen(builtins[i].name);
+		if (!builtins[i]._is_set &&  strncmp(builtins[i].name, option, j) == 0)
+		{
+			fprintf(stderr, "builtin Option: <%s>\n", builtins[i].name); //rm
+			builtins[i]._is_set = 1;
+			return (j + 2 + ((int (*)(const t_args_spec *, t_args_data *))builtins[i].value_ptr)(builtins, args_data));
+		}
+	}
 	while (specs[++i].name)
 	{
 		j = _strlen(specs[i].name);
 		if (strncmp(specs[i].name, option, j) == 0)
 		{
-			fprintf(stderr, "long Option: <%s>\n", specs[i].name);
+			fprintf(stderr, "long Option: <%s>\n", specs[i].name); //rm
 			return (j + 2 + _set_value(&specs[i], option + j + 1, args_data));
 		}
 	}
@@ -148,15 +102,26 @@ static inline int	handle_short_option(
 	t_args_data *args_data
 )
 {
-	register int	i;
+	t_args_spec	*builtins;
+	register int		i;
 
-	(void)args_data;
+	builtins = _get_builtin_args();
+	i = -1;
+	while (builtins[++i].name)
+	{
+		if (builtins[i].short_name == option[0])
+		{
+			fprintf(stderr, "builtin Option: <-%c>\n", builtins[i].short_name); //rm
+			builtins[i]._is_set = 1;
+			return (2 + ((int (*)(const t_args_spec *, t_args_data *))builtins[i].value_ptr)(builtins, args_data));
+		}
+	}
 	i = -1;
 	while (specs[++i].name)
 	{
 		if (specs[i].short_name == option[0])
 		{
-			fprintf(stderr, "short Option: <-%c>\n", specs[i].short_name);
+			fprintf(stderr, "short Option: <-%c>\n", specs[i].short_name); //rm
 			return (2 + _set_value(&specs[i], option + 1, args_data));
 		}
 	}
@@ -180,33 +145,6 @@ static inline int	handle_positional_argument(
 		}
 	}
 	return (1);
-}
-
-__attribute__((malloc))
-static inline char	*cat_options(
-	const int argc,
-	const char **argv
-)
-{
-	char	*result;
-	int		i;
-	int		total_length;
-
-	total_length = 0;
-	i = 0;
-	while (++i < argc)
-		total_length += _strlen(argv[i]) + 1;
-	result = (char *)_mem_alloc((total_length + 1) * sizeof(char));
-	if (unlikely(!result))
-		return (NULL);
-	i = 0;
-	while (++i < argc - 1)
-	{
-		strcat(result, argv[i]);
-		strcat(result, " ");
-	}
-	strcat(result, argv[argc - 1]);
-	return (result);
 }
 
 int	args_parser(
@@ -233,7 +171,7 @@ int	args_parser(
 			else
 				i += handle_short_option(&args_data.one_string[i + 1], specs, &args_data);
 		}
-		else if (!isspace(args_data.one_string[i]))
+		else if (!_isspace(args_data.one_string[i]))
 			i += handle_positional_argument(&args_data.one_string[i], specs, &args_data);
 		else
 			++i;
