@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/16 09:43:48 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/21 09:01:45 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,20 @@
 
 #pragma endregion Header
 #pragma region    Functions
+
+static inline void	_nullify(
+	void *const ptr,
+	const size_t size
+)
+{
+	register size_t	i;
+
+	if (!ptr || size == 0)
+		return ;
+	i = -1;
+	while (++i < size)
+		((char *)ptr)[i] = 0;
+}
 
 __attribute__((visibility("hidden"), used)) void	_mem_free(
 	void *const ptr
@@ -51,6 +65,7 @@ __attribute__((visibility("hidden"), used)) void	*_mem_alloc(
 	new_node->size = size;
 	new_node->next = NULL;
 	new_node->data = (void *)(new_node + 1);
+	_nullify(new_node->data, size);
 	_sft_memory_manager(new_node, sft_mm_register);
 	return (new_node->data);
 }

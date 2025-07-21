@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:08:53 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/16 18:37:07 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/21 08:59:10 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ inline int	_strlen(
 
 	if (unlikely(!str))
 		return (0);
-	len = -1;
-	while (str[++len])
-		;
+	len = 0;
+	while (str[len])
+		++len;
 	return (len);
 }
 

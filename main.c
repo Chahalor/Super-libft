@@ -6,7 +6,7 @@
 /*   By: nduvoid <nduvoid@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 09:02:16 by nduvoid           #+#    #+#             */
-/*   Updated: 2025/07/18 09:25:45 by nduvoid          ###   ########.fr       */
+/*   Updated: 2025/07/21 10:33:00 by nduvoid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	test_io(void)
 	file->close(file);
 }*/
 
+/*
 #include "math/math.h"
 void	test_math(void)
 {
@@ -117,13 +118,42 @@ void	test_math(void)
 	printf("Absolute value of -42: %f\n", sft_math_abs(-42));
 	printf("Max of 5 and 10: %f\n", sft_math_max(5, 10));
 	printf("Min of 5 and 10: %f\n", sft_math_min(5, 10));
+}*/
+
+#include "args-parser/args-parser.h"
+void	test_args(int argc, char **argv)
+{
+	int		help = 0;
+	int		version = 0;
+	char	*input_file = NULL;
+
+	t_args_spec spec[] = {
+		{ .name = "file", .short_name = 'f', .type = ARG_TYPE_FILE, .help = "Input file", .value_ptr = &input_file, .default_value = NULL, .required = 1, .is_positional = 1 },
+		{ .name = "help", .short_name = 'h', .type = ARG_TYPE_BOOL, .help = "Show help message", .value_ptr = &help, .default_value = "0", .required = 0, .is_positional = 0 },
+		{ .name = "version", .short_name = 'v', .type = ARG_TYPE_BOOL, .help = "Show version information", .value_ptr = &version, .default_value = "0", .required = 0, .is_positional = 0 },
+		{ .name = "input", .short_name = 'i', .type = ARG_TYPE_FILE, .help = "Input file", .value_ptr = &input_file, .default_value = NULL, .required = 1, .is_positional = 0 },
+		{ .name = NULL }
+	};
+
+	if (args_parser(argc, (const char **)argv, spec) < 0)
+	{
+		fprintf(stderr, "Error parsing arguments\n");
+		return;
+	}
+
+	printf("help: %d\n"
+		   "version: %d\n"
+		   "input_file: <%s>\n", help, version, input_file);
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
 	// test_string();
 	// test_memory();
 	// test_io();
-	test_math();
+	// test_math();
+	// test_simd();
+	test_args(argc, argv);
+	
 	return (0);
 }
